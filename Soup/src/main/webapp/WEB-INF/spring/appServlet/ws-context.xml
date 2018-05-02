@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<websocket:handlers>
+		<websocket:mapping handler="teamChatHandler" path="/teamChatSocket.do"/>
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs/>
+	</websocket:handlers>
+	<beans:bean id="teamChatHandler" class="com.hk.soup.soup.project.ws.TeamChatHandler"/>
+	
+	<websocket:handlers>
+		<websocket:mapping handler="messageHandler" path="/alarmSocket.do"/>
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs/>
+	</websocket:handlers>
+	<beans:bean id="messageHandler" class="com.hk.soup.home.ws.MessageHandler"/>
+	
+	<websocket:handlers>
+		<websocket:mapping handler="projectManageHandler" path="/projectManageSocket.do"/>
+		<websocket:sockjs/>
+	</websocket:handlers>
+	<beans:bean id="projectManageHandler" class="com.hk.soup.soup.project.ws.ProjectManageHandler"/>
+	
+</beans:beans>

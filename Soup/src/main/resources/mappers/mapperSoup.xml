@@ -1,0 +1,910 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soup">
+
+	<!-- 스/프 테이블 맵퍼-->
+	<resultMap type="com.hk.soup.search.dto.SoupDto" id="soupDtoMap">
+		<result column="SOUP_NO" property="soupNo" />
+		<result column="SOUP_GUBUN" property="soupGubun" />
+		<result column="SOUP_TITLE" property="soupTitle" />
+		<result column="SOUP_FIELD1" property="soupField1" />
+		<result column="SOUP_FIELD2" property="soupField2" />
+		<result column="SOUP_RECRUIT_END_DATE" property="soupRecruitEndDate" />
+		<result column="SOUP_RECRUIT_END_TIME" property="soupRecruitEndTime" />
+		<result column="SOUP_MEMBER_MIN" property="soupMemberMin" />
+		<result column="SOUP_MEMBER_MAX" property="soupMemberMax" />
+		<result column="SOUP_CONTENT" property="soupContent" />
+		<result column="SOUP_CEATE_DATE" property="soupCreateDate" />
+		<result column="SOUP_STATUS" property="soupStatus" />
+		<result column="SOUP_ADDR1" property="soupAddr1" />
+		<result column="SOUP_ADDR2" property="soupAddr2" />
+		<result column="SOUP_START_DATE" property="soupStartDate" />
+		<result column="SOUP_END_DATE" property="soupEndDate" />
+		<result column="SOUP_DAY" property="soupDay" />
+		<result column="SOUP_START_TIME" property="soupStartTime" />
+		<result column="SOUP_END_TIME" property="soupEndTime" />
+		<result column="SOUP_PRICE" property="soupPrice" />
+		<result column="SOUP_INTRO_VIDEO" property="soupIntroVideo" />
+	</resultMap>
+	
+	<!-- 스/프 검색 맵퍼 -->
+	<resultMap type="com.hk.soup.search.dto.SoupSearchDto" id="soupSearchDto">
+		<result column="SOUP_NO" property="soupNo" />
+		<result column="SOUP_GUBUN" property="soupGubun" />
+		<result column="SOUP_TITLE" property="soupTitle" />
+		<result column="SOUP_FIELD1" property="soupField1" />
+		<result column="SOUP_FIELD2" property="soupField2" />
+		<result column="SOUP_RECRUIT_END_DATE" property="soupRecruitEndDate" />
+		<result column="SOUP_MEMBER_MIN" property="soupMemberMin" />
+		<result column="SOUP_MEMBER_MAX" property="soupMemberMax" />
+		<result column="SOUP_ADDR1" property="soupAddr1" />
+		<result column="SOUP_ADDR2" property="soupAddr2" />
+		<result column="SOUP_START_DATE" property="soupStartDate" />
+		<result column="SOUP_END_DATE" property="soupEndDate" />
+		<result column="SOUP_DAY" property="soupDay" />
+		<result column="SOUP_START_TIME" property="soupStartTime" />
+		<result column="SOUP_END_TIME" property="soupEndTime" />
+		<result column="SOUP_PRICE" property="soupPrice" />
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="MEMBER_EMAIL" property="memberEmail" />
+		<result column="MEMBER_NAME" property="memberName" />
+		<result column="MEMBER_FACE" property="memberFace" />
+	</resultMap>
+	
+	<!-- 스/프 상세보기 맵퍼 -->
+	<resultMap type="com.hk.soup.search.dto.SoupDetailDto" id="soupDetailDto">
+		<result column="SOUP_NO" property="soupNo" />
+		<result column="SOUP_GUBUN" property="soupGubun" />
+		<result column="SOUP_TITLE" property="soupTitle" />
+		<result column="SOUP_FIELD1" property="soupField1" />
+		<result column="SOUP_FIELD2" property="soupField2" />
+		<result column="SOUP_RECRUIT_END_DATE" property="soupRecruitEndDate" />
+		<result column="SOUP_RECRUIT_END_TIME" property="soupRecruitEndTime" />
+		<result column="SOUP_CONTENT" property="soupContent" />
+		<result column="SOUP_MEMBER_MIN" property="soupMemberMin" />
+		<result column="SOUP_MEMBER_MAX" property="soupMemberMax" />
+		<result column="SOUP_ADDR1" property="soupAddr1" />
+		<result column="SOUP_ADDR2" property="soupAddr2" />
+		<result column="SOUP_START_DATE" property="soupStartDate" />
+		<result column="SOUP_END_DATE" property="soupEndDate" />
+		<result column="SOUP_DAY" property="soupDay" />
+		<result column="SOUP_START_TIME" property="soupStartTime" />
+		<result column="SOUP_END_TIME" property="soupEndTime" />
+		<result column="SOUP_PRICE" property="soupPrice" />
+		<result column="SOUP_INTRO_VIDEO" property="soupIntroVideo" />
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="MEMBER_EMAIL" property="memberEmail" />
+		<result column="MEMBER_NAME" property="memberName" />
+		<result column="MEMBER_FACE" property="memberFace" />
+		<result column="TEACHER_NO" property="teacherNo"/>
+	</resultMap>
+	
+	<!-- 찜 맴퍼 -->
+	<resultMap type="com.hk.soup.search.dto.SoupJJimDto" id="jjimDtoMap">
+		<result column="SOUP_NO" property="soupNo"/>
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="JJIM_DATE" property="jjimDate"/>
+	</resultMap>
+	
+	<!-- 신청 맴퍼 -->
+	<resultMap type="com.hk.soup.search.dto.SoupApplyDto" id="applyDtoMap">
+		<result column="SOUP_NO" property="soupNo"/>
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="SOUP_APPLY_INTRO" property="soupApplyIntro"/>
+		<result column="SOUP_APPLY_ENTERED" property="soupApplyEntered"/>
+		<result column="SOUP_APPLY_DATE" property="soupApplyDate"/>
+	</resultMap>
+	
+	<resultMap type="com.hk.soup.soup.dto.MySoupDto" id="MySoupDtoMap">
+		<result column="SOUP_NO" property="soupNo"/>
+		<result column="SOUP_TITLE" property="soupTitle"/>
+		<result column="SOUP_GUBUN" property="soupGubun"/>
+		<result column="SOUP_MEMBER_GUBUN" property="soupMemberGubun"/>
+		<result column="SOUP_FIELD1" property="soupField1"/>
+		<result column="SOUP_FIELD2" property="soupField2"/>
+	</resultMap>
+	
+	<resultMap type="com.hk.soup.soup.dto.SoupMemberDto" id="SoupMemberDtoMap">
+		<result column="SOUP_NO" property="soupNo"/>
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="MEMBER_EMAIL" property="memberEmail"/>
+		<result column="MEMBER_NAME" property="memberName"/>
+		<result column="MEMBER_FACE" property="memberFace"/>
+		<result column="SOUP_MEMBER_GUBUN" property="soupMemberGubun"/>
+		<result column="SOUP_APPLY_INTRO" property="soupApplyIntro"/>
+		<result column="SOUP_MEMBER_STATUS" property="soupMemberStatus"/>
+	</resultMap>
+	
+	<resultMap type="com.hk.soup.soup.dto.SoupMaxMemberDto" id="SoupMaxMemberDto">
+		<result column="CURRENT_NO" property="currentNo"/>
+		<result column="SOUP_MEMBER_MAX" property="soupMemberMax"/>
+	</resultMap>
+
+	<resultMap type="com.hk.soup.soup.dto.SoupReviewDto" id="SoupReviewDto">
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="SOUP_NO" property="soupNo"/>
+		<result column="TEACHER_NO" property="teacherNo"/>
+		<result column="REVIEW_SCORE" property="reviewScore"/>
+		<result column="REVIEW_CONTENT" property="reviewContent"/>
+		<result column="REVIEW_DATE" property="reviewDate"/>
+		<result column="MEMBER_NAME" property="memberName"/>
+		<result column="MEMBER_FACE" property="memberFace"/>
+	</resultMap>
+
+	<!-- 모집중인 프로젝트 최신순으로 6개 출력 -->
+	<select id="selectP" resultMap="soupSearchDto">
+		<![CDATA[
+		SELECT ROWNUM,A.SOUP_NO, A.SOUP_GUBUN, A.SOUP_TITLE, A.SOUP_FIELD1, A.SOUP_FIELD2, A.SOUP_RECRUIT_END_DATE, 
+	       A.SOUP_MEMBER_MIN, A.SOUP_MEMBER_MAX, A.SOUP_ADDR1, A.SOUP_ADDR2, A.SOUP_START_DATE, A.SOUP_END_DATE,
+	       A.SOUP_DAY, A.SOUP_START_TIME, A.SOUP_END_TIME, A.SOUP_PRICE,
+	       A.MEMBER_NO, A.MEMBER_EMAIL, A.MEMBER_NAME, A.MEMBER_FACE
+		FROM 
+			(SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+			FROM SOUP
+			INNER JOIN
+			    (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			    FROM MEMBER
+			    INNER JOIN SOUP_MEMBER
+			    USING (MEMBER_NO)
+			    WHERE MEMBER_ENA = 'Y'
+			    AND SOUP_MEMBER_GUBUN = 'L')
+			USING (SOUP_NO)
+			WHERE SOUP_STATUS = 'RECRUIT'
+				  AND SOUP_RECRUIT_END_DATE > SYSDATE
+				  AND SOUP_GUBUN='P'
+			ORDER BY SOUP_CEATE_DATE DESC)A
+		WHERE ROWNUM <= 6
+		]]>
+	</select>
+	
+	<!-- 모집중인 무료 스터디 최신순으로 6개 출력 -->
+	<select id="selectFs" resultMap="soupSearchDto">
+		<![CDATA[
+		SELECT ROWNUM,A.SOUP_NO, A.SOUP_GUBUN, A.SOUP_TITLE, A.SOUP_FIELD1, A.SOUP_FIELD2, A.SOUP_RECRUIT_END_DATE, 
+	       A.SOUP_MEMBER_MIN, A.SOUP_MEMBER_MAX, A.SOUP_ADDR1, A.SOUP_ADDR2, A.SOUP_START_DATE, A.SOUP_END_DATE,
+	       A.SOUP_DAY, A.SOUP_START_TIME, A.SOUP_END_TIME, A.SOUP_PRICE,
+	       A.MEMBER_NO, A.MEMBER_EMAIL, A.MEMBER_NAME, A.MEMBER_FACE
+		FROM 
+			(SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+			FROM SOUP
+			INNER JOIN
+			    (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			    FROM MEMBER
+			    INNER JOIN SOUP_MEMBER
+			    USING (MEMBER_NO)
+			    WHERE MEMBER_ENA = 'Y'
+			    AND SOUP_MEMBER_GUBUN = 'L')
+			USING (SOUP_NO)
+			WHERE SOUP_STATUS = 'RECRUIT'
+				  AND SOUP_RECRUIT_END_DATE > SYSDATE
+				  AND SOUP_GUBUN='FS'
+			ORDER BY SOUP_CEATE_DATE DESC)A
+		WHERE ROWNUM <= 6
+		]]>
+	</select>
+	
+	<!-- 모집중인 유료 스터디 최신순으로 6개 출력 -->
+	<select id="selectPs" resultMap="soupSearchDto">
+		<![CDATA[
+		SELECT ROWNUM,A.SOUP_NO, A.SOUP_GUBUN, A.SOUP_TITLE, A.SOUP_FIELD1, A.SOUP_FIELD2, A.SOUP_RECRUIT_END_DATE, 
+	       A.SOUP_MEMBER_MIN, A.SOUP_MEMBER_MAX, A.SOUP_ADDR1, A.SOUP_ADDR2, A.SOUP_START_DATE, A.SOUP_END_DATE,
+	       A.SOUP_DAY, A.SOUP_START_TIME, A.SOUP_END_TIME, A.SOUP_PRICE,
+	       A.MEMBER_NO, A.MEMBER_EMAIL, A.MEMBER_NAME, A.MEMBER_FACE
+		FROM 
+			(SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+			FROM SOUP
+			INNER JOIN
+			    (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			    FROM MEMBER
+			    INNER JOIN SOUP_MEMBER
+			    USING (MEMBER_NO)
+			    WHERE MEMBER_ENA = 'Y'
+			    AND SOUP_MEMBER_GUBUN = 'L')
+			USING (SOUP_NO)
+			WHERE SOUP_STATUS = 'RECRUIT'
+				  AND SOUP_RECRUIT_END_DATE > SYSDATE
+				  AND SOUP_GUBUN='PS'
+			ORDER BY SOUP_CEATE_DATE DESC)A
+		WHERE ROWNUM <= 6
+		]]>
+	</select>
+	
+
+	<!--메인페이지 모집중인 프로젝트 최신순으로 8개 출력 -->
+
+	<select id="mainProjectView" resultMap="soupSearchDto">
+		<![CDATA[
+		SELECT ROWNUM,A.SOUP_NO, A.SOUP_GUBUN, A.SOUP_TITLE, A.SOUP_FIELD1, A.SOUP_FIELD2, A.SOUP_RECRUIT_END_DATE, 
+	       A.SOUP_MEMBER_MIN, A.SOUP_MEMBER_MAX, A.SOUP_ADDR1, A.SOUP_ADDR2, A.SOUP_START_DATE, A.SOUP_END_DATE,
+	       A.SOUP_DAY, A.SOUP_START_TIME, A.SOUP_END_TIME, A.SOUP_PRICE,
+	       A.MEMBER_NO, A.MEMBER_EMAIL, A.MEMBER_NAME, A.MEMBER_FACE
+		FROM 
+			(SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+			FROM SOUP
+			INNER JOIN
+			    (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			    FROM MEMBER
+			    INNER JOIN SOUP_MEMBER
+			    USING (MEMBER_NO)
+			    WHERE MEMBER_ENA = 'Y'
+			    AND SOUP_MEMBER_GUBUN = 'L')
+			USING (SOUP_NO)
+			WHERE SOUP_STATUS = 'RECRUIT'
+				  AND SOUP_RECRUIT_END_DATE > SYSDATE
+				  AND SOUP_GUBUN='P'
+			ORDER BY SOUP_CEATE_DATE DESC)A
+		WHERE ROWNUM <= 8
+		]]>
+	</select>
+	
+	<!--메인페이지 모집중인 유료스터디 최신순으로 1순위 출력 -->
+	<select id="mainPsView1" resultMap="soupSearchDto">
+		<![CDATA[
+		SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+			FROM
+					(SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE,ROW_NUMBER()OVER( ORDER BY SOUP_NO DESC)RONUMB
+			FROM SOUP
+			INNER JOIN
+			    (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			    FROM MEMBER
+			    INNER JOIN SOUP_MEMBER
+			    USING (MEMBER_NO)
+			    WHERE MEMBER_ENA = 'Y'
+			    AND SOUP_MEMBER_GUBUN = 'L')
+			USING (SOUP_NO)
+			WHERE SOUP_STATUS = 'RECRUIT'
+				  AND SOUP_RECRUIT_END_DATE > SYSDATE
+				  AND SOUP_GUBUN='PS')
+				  WHERE RONUMB LIKE 1
+			]]>		
+	</select>
+	
+	<!--메인페이지 모집중인 유료스터디 최신순으로 2순위 출력 -->
+	<select id="mainPsView2" resultMap="soupSearchDto">
+		<![CDATA[
+		SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+			FROM
+					(SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE,ROW_NUMBER()OVER( ORDER BY SOUP_NO DESC)RONUMB
+			FROM SOUP
+			INNER JOIN
+			    (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			    FROM MEMBER
+			    INNER JOIN SOUP_MEMBER
+			    USING (MEMBER_NO)
+			    WHERE MEMBER_ENA = 'Y'
+			    AND SOUP_MEMBER_GUBUN = 'L')
+			USING (SOUP_NO)
+			WHERE SOUP_STATUS = 'RECRUIT'
+				  AND SOUP_RECRUIT_END_DATE > SYSDATE
+				  AND SOUP_GUBUN='PS')
+				  WHERE RONUMB LIKE 2
+			]]>		
+	</select>
+	
+	<!--메인페이지 모집중인 유료스터디 최신순으로 3순위 출력 -->
+	<select id="mainPsView3" resultMap="soupSearchDto">
+		<![CDATA[
+		SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+			FROM
+					(SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE,ROW_NUMBER()OVER( ORDER BY SOUP_NO DESC)RONUMB
+			FROM SOUP
+			INNER JOIN
+			    (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			    FROM MEMBER
+			    INNER JOIN SOUP_MEMBER
+			    USING (MEMBER_NO)
+			    WHERE MEMBER_ENA = 'Y'
+			    AND SOUP_MEMBER_GUBUN = 'L')
+			USING (SOUP_NO)
+			WHERE SOUP_STATUS = 'RECRUIT'
+				  AND SOUP_RECRUIT_END_DATE > SYSDATE
+				  AND SOUP_GUBUN='PS')
+				  WHERE RONUMB LIKE 3
+			]]>		
+	</select>
+	
+	<!--메인페이지 모집중인 무료스터디 최신순으로 1순위 출력 -->
+	<select id="mainFsView1" resultMap="soupSearchDto">
+		<![CDATA[
+		SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+			FROM
+					(SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE,ROW_NUMBER()OVER( ORDER BY SOUP_NO DESC)RONUMB
+			FROM SOUP
+			INNER JOIN
+			    (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			    FROM MEMBER
+			    INNER JOIN SOUP_MEMBER
+			    USING (MEMBER_NO)
+			    WHERE MEMBER_ENA = 'Y'
+			    AND SOUP_MEMBER_GUBUN = 'L')
+			USING (SOUP_NO)
+			WHERE SOUP_STATUS = 'RECRUIT'
+				  AND SOUP_RECRUIT_END_DATE > SYSDATE
+				  AND SOUP_GUBUN='FS')
+				  WHERE RONUMB LIKE 1
+			]]>		
+	</select>
+	
+	<!--메인페이지 모집중인 무료스터디 최신순으로 2순위 출력 -->
+	<select id="mainFsView2" resultMap="soupSearchDto">
+	<![CDATA[
+		SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+			FROM
+					(SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE,ROW_NUMBER()OVER( ORDER BY SOUP_NO DESC)RONUMB
+			FROM SOUP
+			INNER JOIN
+			    (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			    FROM MEMBER
+			    INNER JOIN SOUP_MEMBER
+			    USING (MEMBER_NO)
+			    WHERE MEMBER_ENA = 'Y'
+			    AND SOUP_MEMBER_GUBUN = 'L')
+			USING (SOUP_NO)
+			WHERE SOUP_STATUS = 'RECRUIT'
+				  AND SOUP_RECRUIT_END_DATE > SYSDATE
+				  AND SOUP_GUBUN='FS')
+				  WHERE RONUMB LIKE 2
+			]]>		
+	</select>
+	
+	<!--메인페이지 모집중인 무료스터디 최신순으로 3순위 출력 -->
+	<select id="mainFsView3" resultMap="soupSearchDto">
+	<![CDATA[
+		SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+			FROM
+					(SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE,ROW_NUMBER()OVER( ORDER BY SOUP_NO DESC)RONUMB
+			FROM SOUP
+			INNER JOIN
+			    (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			    FROM MEMBER
+			    INNER JOIN SOUP_MEMBER
+			    USING (MEMBER_NO)
+			    WHERE MEMBER_ENA = 'Y'
+			    AND SOUP_MEMBER_GUBUN = 'L')
+			USING (SOUP_NO)
+			WHERE SOUP_STATUS = 'RECRUIT'
+				  AND SOUP_RECRUIT_END_DATE > SYSDATE
+				  AND SOUP_GUBUN='FS')
+				  WHERE RONUMB LIKE 3
+			]]>		
+	</select>
+		
+	<!-- 모집중인 스터디/프로젝트 구분별 출력 -->
+	<select id="selectGubun" parameterType="String" resultMap="soupSearchDto">
+		SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+			       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+			       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+			       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+		FROM SOUP
+		INNER JOIN
+		    (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+		    FROM MEMBER
+		    INNER JOIN SOUP_MEMBER
+		    USING (MEMBER_NO)
+		    WHERE MEMBER_ENA = 'Y'
+		    AND SOUP_MEMBER_GUBUN = 'L')
+		USING (SOUP_NO)
+		WHERE SOUP_STATUS = 'RECRUIT'
+			  AND SOUP_RECRUIT_END_DATE > SYSDATE
+			  AND SOUP_GUBUN=#{gubun}
+		ORDER BY SOUP_CEATE_DATE DESC
+	</select>
+
+	<!-- 모집중인 스터디/프로젝트 조건별 검색 -->
+	<select id="selectSoupSearch" parameterType="soupFilterDto" resultMap="soupSearchDto">
+		SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+		       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+		       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+		       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+		 FROM SOUP
+		 INNER JOIN
+			   (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			   FROM MEMBER
+			   INNER JOIN SOUP_MEMBER
+			   USING (MEMBER_NO)
+			   WHERE MEMBER_ENA = 'Y'
+			   AND SOUP_MEMBER_GUBUN = 'L')
+		 USING (SOUP_NO)
+		 WHERE SOUP_STATUS = 'RECRUIT'
+		   AND SOUP_RECRUIT_END_DATE > SYSDATE
+		<if test='soupGubun != ""'>
+		   AND SOUP_GUBUN = #{soupGubun}
+		</if>
+		<if test='soupField1 != ""'>
+		   AND SOUP_FIELD1 = #{soupField1}
+		</if>
+		<if test='soupField2 != ""'>
+		   AND SOUP_FIELD2 = #{soupField2}
+		</if>
+		<if test='soupAddr1 != ""'>
+		   AND SOUP_ADDR1 = #{soupAddr1}
+		</if>
+		<if test='soupAddr2 != ""'>
+		   AND SOUP_ADDR2 = #{soupAddr2}
+		</if>
+		<if test='soupDay != ""'>
+		   AND SOUP_DAY LIKE '%${soupDay}%'
+		</if>
+		<choose>
+			<when test='soupSearchSelect == "SOUP_TITLE"'>
+				AND SOUP_TITLE LIKE '%${soupSearchWord}%'
+			</when>
+			<when test='soupSearchSelect == "MEMBER_NAME"'>
+				AND MEMBER_NAME LIKE '%${soupSearchWord}%'
+			</when>
+			<when test='soupSearchSelect == "SOUP_ADDR"'>
+				AND (SOUP_ADDR1 LIKE '%${soupSearchWord}%' OR SOUP_ADDR2 LIKE '%${soupSearchWord}%')
+			</when>
+			<otherwise>
+				AND (SOUP_TITLE LIKE '%${soupSearchWord}%' OR MEMBER_NAME LIKE '%${soupSearchWord}%'
+					OR SOUP_ADDR1 LIKE '%${soupSearchWord}%' OR SOUP_ADDR2 LIKE '%${soupSearchWord}%')
+			</otherwise>				
+		</choose>
+		 ORDER BY SOUP_CEATE_DATE DESC
+	</select>
+	
+		<!--메인 모집중인 스터디/프로젝트 구분별 검색 -->
+	<select id="mainselectSearch" parameterType="map" resultMap="soupSearchDto">
+		SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, 
+		       SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, SOUP_END_DATE,
+		       SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE,
+		       MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+		 FROM SOUP
+		 INNER JOIN
+			   (SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			   FROM MEMBER
+			   INNER JOIN SOUP_MEMBER
+			   USING (MEMBER_NO)
+			   WHERE MEMBER_ENA = 'Y'
+			   AND SOUP_MEMBER_GUBUN = 'L')
+		 USING (SOUP_NO)
+		 WHERE SOUP_STATUS = 'RECRUIT'
+		   AND SOUP_RECRUIT_END_DATE > SYSDATE	
+		   	  
+		 <if test='soupGubun != ""'>
+		   AND SOUP_GUBUN = #{soupGubun}
+		</if>
+		<choose>
+			<when test='mainselectSearch == "SOUP_TITLE"'>
+				AND SOUP_TITLE LIKE '%${soupSearchWord}%'
+			</when>
+			<when test='mainselectSearch == "MEMBER_NAME"'>
+				AND MEMBER_NAME LIKE '%${soupSearchWord}%'
+			</when>
+			<when test='mainselectSearch == "SOUP_ADDR"'>
+				AND (SOUP_ADDR1 LIKE '%${soupSearchWord}%' OR SOUP_ADDR2 LIKE '%${soupSearchWord}%')
+			</when>
+			<otherwise>
+				AND (SOUP_TITLE LIKE '%${soupSearchWord}%' OR MEMBER_NAME LIKE '%${soupSearchWord}%'
+					OR SOUP_ADDR1 LIKE '%${soupSearchWord}%' OR SOUP_ADDR2 LIKE '%${soupSearchWord}%')
+			</otherwise>				
+		</choose>
+	</select>
+	
+	<select id="selectCurrentMember" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		  FROM SOUP_MEMBER
+		 WHERE SOUP_NO = #{soupNo}
+		   AND SOUP_MEMBER_STATUS = 'BELONG'
+	</select>
+
+	<!-- 무료스터디 생성 -->
+	<insert id="createFs" parameterType="soupCreateDto">
+		INSERT ALL
+			INTO SOUP VALUES(SOUP_SEQ.NEXTVAL,'FS',#{soupTitle},#{soupField1},
+								#{soupField2},#{soupRecruitEndDate},#{soupMemberMin},#{soupMemberMax},
+								#{soupContent},SYSDATE,#{soupAddr1},#{soupAddr2},#{soupStartDate},
+								#{soupEndDate},#{soupDay},#{soupStartTime},#{soupEndTime},NULL,NULL,
+								'RECRUIT',#{soupRecruitEndTime})
+			INTO SOUP_MEMBER VALUES(SOUP_SEQ.CURRVAL,#{memberNo},'L','BELONG',SYSDATE)
+		SELECT *
+		FROM DUAL
+	</insert>
+	
+	<!-- 유료스터디 생성 -->
+	<insert id="createPs" parameterType="soupCreateDto">
+		INSERT ALL
+			INTO SOUP VALUES(SOUP_SEQ.NEXTVAL,'PS',#{soupTitle},#{soupField1},
+								#{soupField2},#{soupRecruitEndDate},#{soupMemberMin},#{soupMemberMax},
+								#{soupContent},SYSDATE,#{soupAddr1},#{soupAddr2},#{soupStartDate},
+								#{soupEndDate},#{soupDay},#{soupStartTime},#{soupEndTime},#{soupPrice},#{soupIntroVideo},
+								'RECRUIT',#{soupRecruitEndTime})
+			INTO SOUP_MEMBER VALUES(SOUP_SEQ.CURRVAL,#{memberNo},'L','BELONG',SYSDATE)
+		SELECT *
+		FROM DUAL
+	</insert>
+	
+	<!-- 프로젝트 생성 -->
+	<insert id="createP" parameterType="soupCreateDto">
+		INSERT ALL
+			INTO SOUP VALUES(SOUP_SEQ.NEXTVAL,'P',#{soupTitle},#{soupField1},
+								#{soupField2},#{soupRecruitEndDate},#{soupMemberMin},#{soupMemberMax},
+								#{soupContent},SYSDATE,NULL,NULL,#{soupStartDate},
+								#{soupEndDate},NULL,NULL,NULL,NULL,NULL,
+								'RECRUIT',#{soupRecruitEndTime})
+			INTO SOUP_MEMBER VALUES(SOUP_SEQ.CURRVAL,#{memberNo},'L','BELONG',SYSDATE)
+		SELECT *
+		FROM DUAL
+	</insert>
+	
+	<!-- 상세보기 -->
+	<select id="selectOne" parameterType="int" resultMap="soupDetailDto">
+		SELECT SOUP_NO, SOUP_GUBUN, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_RECRUIT_END_DATE, SOUP_RECRUIT_END_TIME,
+				SOUP_MEMBER_MIN, SOUP_MEMBER_MAX, SOUP_CONTENT, SOUP_CEATE_DATE, SOUP_ADDR1, SOUP_ADDR2, SOUP_START_DATE, 
+				SOUP_END_DATE, SOUP_DAY, SOUP_START_TIME, SOUP_END_TIME, SOUP_PRICE, SOUP_INTRO_VIDEO, SOUP_STATUS,
+				MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE
+		FROM  SOUP
+		INNER JOIN 
+			(SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			FROM MEMBER
+			INNER JOIN SOUP_MEMBER
+			USING (MEMBER_NO)
+			WHERE MEMBER_ENA='Y'
+			AND SOUP_MEMBER_GUBUN='L')
+		USING (SOUP_NO)
+		WHERE SOUP_STATUS='RECRUIT'
+			  AND SOUP_NO=#{soupNo}
+	</select>
+	
+	<!-- 스/프 멤버 테이블 추가 -->
+	<insert id="soupMemberInsert" parameterType="soupDetailDto">
+		INSERT INTO SOUP_MEMBER
+		VALUES(#{soupNo},#{memberNo},'M','BELONG',SYSDATE)
+	</insert>
+	
+	<!-- 결재내역 추가하기 -->
+	<insert id="payInsert" parameterType="soupDetailDto">
+		INSERT INTO PAY
+		VALUES(PAY_SQ.NEXTVAL,#{memberNo},#{soupNo},#{soupPrice},'CARD',SYSDATE)
+	</insert>
+	
+	<!-- 찜하기 -->
+	<insert id="soupJJimInsert" parameterType="soupJJimDto">
+		INSERT INTO JJIM 
+		VALUES(#{soupNo},#{memberNo},SYSDATE)
+	</insert>
+	
+	<!-- 찜취소 -->
+	<delete id="soupJJimCancle" parameterType="soupJJimDto">
+		DELETE FROM JJIM 
+		WHERE SOUP_NO=#{soupNo} AND MEMBER_NO=#{memberNo}
+	</delete>
+	
+	<!-- 찜 유/무 -->
+	<select id="soupJJimUmoo" parameterType="soupJJimDto" resultMap="jjimDtoMap">
+		SELECT * FROM JJIM 
+		WHERE SOUP_NO=#{soupNo} AND MEMBER_NO=#{memberNo}
+	</select>
+	
+	<!-- 스/프 신청 -->
+	<insert id="soupApplyInsert" parameterType="soupApplyDto" >
+		INSERT INTO SOUP_APPLY 
+		VALUES(#{soupNo},#{memberNo},#{soupApplyIntro},'N',SYSDATE)
+	</insert>
+	
+	<!-- 스/프 취소 -->
+	<delete id="soupApplyCancle" parameterType="soupApplyDto">
+		DELETE FROM SOUP_APPLY 
+		WHERE SOUP_NO=#{soupNo} AND MEMBER_NO=#{memberNo}
+	</delete>
+	
+	<!-- 스/프 신청 유/무 -->
+	<select id="soupApplyUmoo" parameterType="soupApplyDto" resultMap="applyDtoMap">
+		SELECT * FROM SOUP_APPLY 
+		WHERE SOUP_NO=#{soupNo} AND MEMBER_NO=#{memberNo}
+	</select>
+	
+	<!-- 스/프 멤버 유/무 -->
+	<select id="soupMemberUmoo" parameterType="soupMemberDto" resultMap="SoupMemberDtoMap">
+		SELECT * FROM SOUP_MEMBER 
+		WHERE SOUP_NO=#{soupNo} AND MEMBER_NO=#{memberNo}
+	</select>
+	
+	<!-- 스/프 업데이트 -->
+	<update id="soupUpdate" parameterType="soupDto">
+		UPDATE SOUP
+		   SET SOUP_NO=#{soupNo}, SOUP_GUBUN=#{soupGubun}, SOUP_TITLE=#{soupTitle},
+		   		SOUP_FIELD1=#{soupField1}, SOUP_FIELD2=#{soupField2},
+		   		SOUP_RECRUIT_END_DATE=#{soupRecruitEndDate}, SOUP_MEMBER_MIN=#{soupMemberMin}, SOUP_MEMBER_MAX=#{soupMemberMax},
+				SOUP_CONTENT=#{soupContent}, SOUP_CEATE_DATE=SYSDATE,
+				<choose>
+					<when test="soupAddr1 != null">
+						SOUP_ADDR1=#{soupAddr1}, SOUP_ADDR2=#{soupAddr2},
+					</when>
+					<otherwise>
+						SOUP_ADDR1=NULL, SOUP_ADDR2=NULL,
+					</otherwise>
+				</choose>
+				SOUP_START_DATE=#{soupStartDate}, SOUP_END_DATE=#{soupEndDate}, 
+				<choose>
+					<when test="soupDay != null">
+						SOUP_DAY=#{soupDay},
+					</when>
+					<otherwise>
+						SOUP_DAY=NULL,
+					</otherwise>
+				</choose>
+				<choose>
+					<when test="soupStartTime != null">
+						SOUP_START_TIME=#{soupStartTime}, SOUP_END_TIME=#{soupEndTime},
+					</when>
+					<otherwise>
+						SOUP_START_TIME=NULL, SOUP_END_TIME=NULL,
+					</otherwise>
+				</choose>
+				<choose>
+					<when test="soupPrice != null">
+						SOUP_PRICE=#{soupPrice},
+					</when>
+					<otherwise>
+						SOUP_PRICE=NULL,
+					</otherwise>
+				</choose>
+				<choose>
+					<when test="soupIntroVideo != null">
+						SOUP_INTRO_VIDEO=#{soupIntroVideo},
+					</when>
+					<otherwise>
+						<if test='soupGubun != "PS"'>
+							SOUP_INTRO_VIDEO=NULL,
+						</if>
+					</otherwise>
+				</choose>
+				SOUP_STATUS='RECRUIT', SOUP_RECRUIT_END_TIME=#{soupRecruitEndTime}
+		 WHERE SOUP_NO = #{soupNo}
+	</update>
+	
+	<!-- 스프 리뷰 가져오기 -->
+	<select id="soupReviewList" parameterType="int" resultMap="SoupReviewDto">
+		SELECT MEMBER_NAME, MEMBER_FACE, REVIEW_SCORE, REVIEW_CONTENT, REVIEW_DATE
+		  FROM (SELECT MEMBER_NO, REVIEW_SCORE, REVIEW_CONTENT, REVIEW_DATE
+		          FROM REVIEW
+		         WHERE TEACHER_NO = 
+		                ( SELECT TEACHER_NO
+		                   FROM TEACHER
+		                   JOIN (
+		                         SELECT MEMBER_NO
+		                           FROM SOUP_MEMBER
+		                          WHERE SOUP_NO = #{soupNo}
+		                            AND SOUP_MEMBER_GUBUN = 'L')
+		                   USING (MEMBER_NO))
+		                   )
+		  JOIN MEMBER
+		 USING (MEMBER_NO)
+		 ORDER BY REVIEW_DATE DESC
+	</select>
+	
+	<!-- 내가 참여 중인 스프 목록 가져오기 -->
+	<select id="selectMySoupList" parameterType="map" resultMap="MySoupDtoMap">
+		SELECT SOUP_NO, SOUP_TITLE, SOUP_GUBUN, SOUP_MEMBER_GUBUN, SOUP_FIELD1, SOUP_FIELD2
+		FROM SOUP
+		INNER JOIN
+			(SELECT SOUP_NO, SOUP_MEMBER_ENTER_DATE, SOUP_MEMBER_GUBUN
+			FROM SOUP_MEMBER
+			WHERE MEMBER_NO = ${memberNo}
+				AND SOUP_MEMBER_STATUS = 'BELONG')
+		USING(SOUP_NO)
+		WHERE SOUP_STATUS IN ('RECRUIT', 'DONE')
+		ORDER BY SOUP_MEMBER_ENTER_DATE ASC
+	</select>
+	
+	<!-- 나의 종료한 스프 목록 가져오기 -->
+	<select id="selectDoneSoupList" parameterType="map" resultMap="MySoupDtoMap">
+		SELECT SOUP_NO, SOUP_TITLE, SOUP_GUBUN, SOUP_MEMBER_GUBUN, SOUP_FIELD1, SOUP_FIELD2
+		FROM SOUP
+		INNER JOIN
+			(SELECT SOUP_NO, SOUP_MEMBER_ENTER_DATE, SOUP_MEMBER_GUBUN
+			FROM SOUP_MEMBER
+			WHERE MEMBER_NO = ${memberNo}
+				AND SOUP_MEMBER_STATUS = 'BELONG')
+		USING(SOUP_NO)
+		WHERE SOUP_STATUS IN ('END')
+		ORDER BY SOUP_MEMBER_ENTER_DATE ASC
+	</select>
+	
+	<!-- 해당 스프에 있는 팀원들 정보 가져오기 -->
+	<select id="selectSoupMemberList" parameterType="map" resultMap="SoupMemberDtoMap">
+		SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_MEMBER_GUBUN
+		FROM SOUP_MEMBER
+		INNER JOIN MEMBER
+		USING (MEMBER_NO)
+		WHERE SOUP_NO  = #{soupNo}
+		AND SOUP_MEMBER_STATUS = 'BELONG'
+		ORDER BY SOUP_NO, SOUP_MEMBER_GUBUN ASC, SOUP_MEMBER_ENTER_DATE ASC
+	</select>
+	
+	<!-- 해당 스프의 신청 인원 가져오기 -->
+	<select id="selectSoupApplyMemberList" parameterType="map" resultMap="SoupMemberDtoMap">
+		SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_FACE, SOUP_APPLY_INTRO
+		  FROM SOUP_APPLY
+		 INNER JOIN MEMBER
+		 USING (MEMBER_NO)
+		 WHERE SOUP_NO = #{soupNo}
+		 		AND MEMBER_ENA = 'Y'
+		 		AND SOUP_APPLY_ENTERED = 'N'
+		 ORDER BY SOUP_APPLY_DATE ASC
+	</select>
+	
+	<!-- 프로젝트 모집 중 상태를 모집 완료로 변경 -->
+	<update id="updateSoupStatusToDone" parameterType="map">
+		UPDATE SOUP
+		   SET SOUP_STATUS = 'DONE'
+		 WHERE SOUP_NO = ${soupNo}
+	</update>
+	
+	<!-- 프로젝트 모집 중 상태를 폐기로 변경 -->
+	<update id="updateSoupStatusToDrop" parameterType="map">
+		UPDATE SOUP
+		   SET SOUP_STATUS = 'DROP'
+		 WHERE SOUP_NO = ${soupNo}
+	</update>
+	
+	<!-- 프로젝트 모집 중 상태를 종료로 변경 -->
+	<update id="updateSoupStatusToEnd" parameterType="map">
+		UPDATE SOUP
+		   SET SOUP_STATUS = 'END'
+		 WHERE SOUP_NO = ${soupNo}
+	</update>
+	
+	<!-- 스프 멤버 스프 나가기 -->
+	<update id="updateProjectMemberDropOut" parameterType="map">
+		UPDATE SOUP_MEMBER
+		   SET SOUP_MEMBER_STATUS = 'DROP'
+		 WHERE SOUP_NO = ${soupNo}
+		   AND MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 해당 멤버를 신청 테이블에서 승낙으로 처리한다. -->
+	<update id="updateSoupApplyAccept" parameterType="map">
+		UPDATE SOUP_APPLY
+		   SET SOUP_APPLY_ENTERED = 'Y'
+		 WHERE SOUP_NO = #{soupNo} 
+		   AND MEMBER_NO = #{memberNo} 
+	</update>
+	
+	<!-- 해당 멤버를 해당 스프에 추가한다. -->
+	<insert id="insertSoupMember" parameterType="map">
+		INSERT INTO SOUP_MEMBER
+		VALUES (#{soupNo}, #{memberNo}, 'M', 'BELONG', SYSDATE)
+	</insert>
+	
+	<!-- 신청 멤버를 취소한다 -->
+	<update id="updateSoupApplyReject" parameterType="map">
+		UPDATE SOUP_APPLY
+		   SET SOUP_APPLY_ENTERED = 'R'
+		 WHERE SOUP_NO = #{soupNo} 
+		   AND MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 해당 스프의 현재 멤버수와 최대 멤버수를 가져온다 -->
+	<select id="selectTotalSoupMember" resultMap="SoupMaxMemberDto">
+		SELECT COUNT(MEMBER_NO) AS CURRENT_NO, SOUP_MEMBER_MAX
+		  FROM SOUP_MEMBER
+		 INNER JOIN SOUP
+		 USING (SOUP_NO)
+		 WHERE SOUP_NO = #{soupNo}
+		   AND SOUP_MEMBER_STATUS = 'BELONG'
+		 GROUP BY SOUP_MEMBER_MAX
+	</select>
+	
+	<!-- 스프 멤버를 추방시킨다 -->
+	<update id="updateProjectMemberKick" parameterType="map">
+		UPDATE SOUP_MEMBER
+		   SET SOUP_MEMBER_STATUS = 'KICK'
+		 WHERE SOUP_NO = #{soupNo}
+		   AND MEMBER_NO = #{memberNo}
+	</update>
+
+	<!-- 스프 리더를 멤버로 변경한다 -->
+	<update id="updateLeaderToMember" parameterType="map">
+	   UPDATE SOUP_MEMBER
+	      SET SOUP_MEMBER_GUBUN = 'M'
+		WHERE SOUP_NO = #{soupNo}
+		  AND MEMBER_NO = #{myNo}
+	</update>
+	
+	<!-- 스프 멤버를 리더로 변경한다 -->
+	<update id="updateMemberToLeader" parameterType="map">
+	   UPDATE SOUP_MEMBER
+	      SET SOUP_MEMBER_GUBUN = 'L'
+		WHERE SOUP_NO = #{soupNo}
+		  AND MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 해당 스프를 평가한 적이 있는지 검색 -->
+	<select id="soupReviewWriteCheck" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		  FROM REVIEW
+		 INNER JOIN SOUP
+		 USING (SOUP_NO)
+		 WHERE MEMBER_NO = #{memberNo}
+		   AND SOUP_NO = #{soupNo}
+		   AND SOUP_GUBUN = 'PS'
+	</select>
+	
+	<!-- 상세보기 -->
+	<select id="selectSoupReviewTarget" parameterType="map" resultMap="soupDetailDto">
+		SELECT SOUP_NO, SOUP_TITLE,	MEMBER_NAME, MEMBER_FACE, TEACHER_NO
+		  FROM
+		        (SELECT SOUP_NO, SOUP_TITLE,	MEMBER_NAME, MEMBER_FACE, MEMBER_NO
+		           FROM  SOUP
+		          INNER JOIN
+			            (SELECT MEMBER_NO, MEMBER_NAME, MEMBER_FACE, SOUP_NO
+			            FROM MEMBER
+			            INNER JOIN SOUP_MEMBER
+			            USING (MEMBER_NO)
+			            WHERE MEMBER_ENA='Y'
+			            AND SOUP_MEMBER_GUBUN='L')
+		         USING (SOUP_NO)
+		         WHERE SOUP_NO=#{soupNo})
+		 INNER JOIN TEACHER
+		 USING (MEMBER_NO)
+	</select>
+
+	<!-- 후기 insert -->
+	<insert id="insertSoupReview" parameterType="com.hk.soup.soup.dto.SoupReviewDto">
+		INSERT
+		  INTO REVIEW
+		VALUES (#{memberNo}, #{soupNo}, #{teacherNo}, #{reviewScore}, #{reviewContent}, SYSDATE)
+	</insert>
+	
+	<!-- 해당 티쳐의 후기 가져오기 -->
+	<select id="selectTeacherReviewList" parameterType="map" resultMap="SoupReviewDto">
+		SELECT MEMBER_NAME, MEMBER_FACE, REVIEW_DATE, REVIEW_CONTENT, REVIEW_SCORE
+		  FROM MEMBER
+		  JOIN (SELECT MEMBER_NO, REVIEW_SCORE, REVIEW_CONTENT, REVIEW_DATE
+		          FROM REVIEW
+		         WHERE SOUP_NO = #{soupNo})
+		 USING (MEMBER_NO)
+		 ORDER BY REVIEW_DATE DESC
+	</select>
+	
+</mapper>

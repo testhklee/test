@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.business">
+ 	<resultMap type="com.hk.soup.business.dto.BusinessDto" id="businessDto">
+ 		<result column="BUSINESS_NO" property="businessNo"/>
+ 		<result column="MEMBER_NO" property="memberNo"/>
+ 		<result column="BUSINESS_DOC" property="businessDoc"/>
+ 		<result column="BUSINESS_STATUS" property="businessStatus"/>
+ 		<result column="MEMBER_NAME" property="memberName"/>
+ 		<result column="MEMBER_TEL" property="memberTel"/>
+ 		<result column="MEMBER_EMAIL" property="memberEmail"/>
+ 		<result column="MEMBER_GRADE" property="memberGrade"/>
+ 	</resultMap>
+ 	
+ 	<select id="selectAll" resultMap="businessDto">
+ 		SELECT * FROM BUSINESS JOIN MEMBER USING(MEMBER_NO) ORDER BY BUSINESS_APPLY_DATE DESC
+ 	</select>
+ 	<select id = "selectOne" resultMap="businessDto">
+ 		SELECT * FROM BUSINESS JOIN MEMBER USING(MEMBER_NO) WHERE MEMBER_NO = #{memberNo}
+ 	</select>
+	<update id="update" parameterType="Map">
+		<foreach collection="list" item="list" index="i" separator=";" open="DECLARE BEGIN" close="; END;">
+			UPDATE BUSINESS SET
+			BUSINESS_STATUS=#{list.businessStatus}
+			WHERE MEMBER_NO=#{list.memberNo}
+		</foreach>
+	</update> 
+	
+	<update id="passGrade" parameterType="Map">
+		UPDATE MEMBER SET MEMBER_GRADE = 'BUSINESS' WHERE MEMBER_NO IN
+		<foreach collection="passGrade" item = "memberNo" open="(" separator="," close=")">
+		#{memberNo.memberNo}
+		</foreach>
+	</update>
+	
+	<update id="elseGrade" parameterType="Map">
+		UPDATE MEMBER SET MEMBER_GRADE = 'USER' WHERE MEMBER_NO IN
+		<foreach collection="userGrade" item = "memberNo" open="(" separator="," close=")">
+		#{memberNo.memberNo}
+		</foreach>
+	</update>
+	
+	<!-- 멤버 등급 변경 -->
+	<update id="updateMemberGrade" parameterType="map">
+		UPDATE MEMBER
+		   SET MEMBER_GRADE = #{memberGrade}
+		 WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 비지니스 WAIT -> PASS -->
+	<update id="updateBusinessStatus" parameterType="map">
+		UPDATE BUSINESS
+		   SET BUSINESS_STATUS = #{businessStatus}
+		 WHERE MEMBER_NO = #{memberNo} 
+	</update>
+	
+		<select id="selectCheckBusiness" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		  FROM BUSINESS
+		 WHERE MEMBER_NO = #{memberNo}
+		   AND BUSINESS_STATUS != 'FAIL'
+	</select>
+	
+	<insert id="insertBusinessApply" parameterType="map">
+		INSERT
+		  INTO BUSINESS
+		VALUES (BUSINESS_SEQ.NEXTVAL, #{memberNo}, #{businessDoc}, 'WAIT', SYSDATE)
+	</insert>
+	
+	<select id="selectCheckTeacher" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		  FROM TEACHER
+		 WHERE MEMBER_NO = #{memberNo}
+		   AND TEACHER_STATUS != 'FAIL'
+	</select>
+	
+	<insert id="insertTeacherApply" parameterType="map">
+		INSERT
+		  INTO TEACHER
+		VALUES (TEACHER_SEQ.NEXTVAL, #{memberNo}, #{teacherDd}, #{teacherCertificate}, #{fileUrl}, 'WAIT', SYSDATE)
+	</insert>
+		
+</mapper>

@@ -1,0 +1,53 @@
+.mySoup{
+	cursor: pointer;
+}
+
+.community-edition {
+    margin-bottom: 10px;
+    height: 300px;
+}
+
+/*내 스프 목록*/
+
+.community-edition .glyphicon{
+	position: absolute; 
+	top: 35px; 
+	right: 47%;
+}
+
+.community-edition .face{
+	display: inline-block;
+	width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.community-edition .face img{
+	height: 100%;
+	width: auto;
+}
+
+div.imgCircleBack{
+	display: inline-block;
+	width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+div.imgCircleBack img{
+	height: 100%;
+	width: auto;
+	cursor: pointer;
+}
+
+.mainImage {
+	border-radius: 20px;
+	width: 460px;
+	margin-right: 100px;
+}
+
+.feild {
+	font-weight: bold;
+}

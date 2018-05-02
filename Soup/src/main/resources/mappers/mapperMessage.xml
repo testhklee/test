@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.message">
+	<resultMap type="com.hk.soup.message.dto.MessageDto" id="messageDto">
+		<result column="MESSAGE_NO" property="messageNo"/>
+		<result column="MESSAGE_SENDER_NO" property="messageSenderNo"/>
+		<result column="MESSAGE_TARGET_NO" property="messageTargetNo"/>
+		<result column="MESSAGE_CONTENT" property="messageContent"/>
+		<result column="MESSAGE_DATE" property="messageDate"/>
+		<result column="MESSAGE_CHECKED" property="messageChecked"/>
+		<result column="MESSAGE_SEND_DEL" property="messageSendDel"/>
+		<result column="MESSAGE_TARGET_DEL" property="messageTargetDel"/>
+		<result column="MEMBER_NAME" property="memberName"/>
+	</resultMap>
+
+	<resultMap type="com.hk.soup.message.dto.MessageReceiverDto" id="MessageReceiverDto">
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="MEMBER_EMAIL" property="memberEmail"/>
+		<result column="MEMBER_NAME" property="memberName"/>
+	</resultMap>
+	
+	<select id="selectSender" resultMap="messageDto">	<!-- 내가 보낸 메세지 -->
+		SELECT MESSAGE_NO, MESSAGE_SENDER_NO, MESSAGE_TARGET_NO, MESSAGE_CONTENT, MESSAGE_DATE,
+			   MESSAGE_CHECKED, MESSAGE_SEND_DEL, MESSAGE_TARGET_DEL, MEMBER_NAME
+		  FROM MESSAGE 
+		 INNER JOIN MEMBER 
+		 	ON MESSAGE_TARGET_NO = MEMBER_NO
+		 WHERE MESSAGE_SENDER_NO = #{messageSenderNo} 
+		   AND MESSAGE_SEND_DEL = 'N'
+	  ORDER BY MESSAGE_DATE DESC
+	</select>
+	
+	<select id="selectTarget" resultMap="messageDto">	<!-- 내가 받은 메세지 -->
+		SELECT MESSAGE_NO, MESSAGE_SENDER_NO, MESSAGE_TARGET_NO, MESSAGE_CONTENT, MESSAGE_DATE,
+			   MESSAGE_CHECKED, MESSAGE_SEND_DEL, MESSAGE_TARGET_DEL, MEMBER_NAME
+		  FROM MESSAGE 
+		 INNER JOIN MEMBER 
+		 	ON MESSAGE_SENDER_NO = MEMBER_NO
+		 WHERE MESSAGE_TARGET_NO = #{messageTargetNo} 
+		   AND MESSAGE_TARGET_DEL = 'N'
+	  	ORDER BY MESSAGE_DATE DESC
+	</select>
+	
+	<select id="selectSenderList" resultMap="messageDto">	<!-- 내가 보낸 메세지  페이징-->
+		SELECT * 
+		FROM(
+		SELECT ROWNUM AS RN, A.* 
+		FROM(
+		SELECT MESSAGE_NO, MESSAGE_SENDER_NO, MESSAGE_TARGET_NO, MESSAGE_CONTENT, MESSAGE_DATE,
+			   MESSAGE_CHECKED, MESSAGE_SEND_DEL, MESSAGE_TARGET_DEL, MEMBER_NAME
+		  FROM MESSAGE 
+		 INNER JOIN MEMBER 
+		 	ON MESSAGE_TARGET_NO = MEMBER_NO
+		 WHERE MESSAGE_SENDER_NO = #{messageSenderNo} 
+		   AND MESSAGE_SEND_DEL = 'N'
+	  ORDER BY MESSAGE_DATE DESC) A ) 
+	  WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="selectTargetList" resultMap="messageDto">	<!-- 내가 받은 메세지 페이징-->
+		SELECT * 
+		FROM(
+		SELECT ROWNUM AS RN, A.* 
+		FROM(
+		SELECT MESSAGE_NO, MESSAGE_SENDER_NO, MESSAGE_TARGET_NO, MESSAGE_CONTENT, MESSAGE_DATE,
+			   MESSAGE_CHECKED, MESSAGE_SEND_DEL, MESSAGE_TARGET_DEL, MEMBER_NAME
+		  FROM MESSAGE 
+		 INNER JOIN MEMBER 
+		 	ON MESSAGE_SENDER_NO = MEMBER_NO
+		 WHERE MESSAGE_TARGET_NO = #{messageTargetNo} 
+		   AND MESSAGE_TARGET_DEL = 'N'
+	  ORDER BY MESSAGE_DATE DESC) A ) 
+	  WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id = "TargetOne" resultMap="messageDto">	<!-- 보낸 메세지 -->
+		SELECT MESSAGE_NO, MESSAGE_SENDER_NO, MESSAGE_TARGET_NO, MESSAGE_CONTENT, MESSAGE_DATE,
+			   MESSAGE_CHECKED, MESSAGE_SEND_DEL, MESSAGE_TARGET_DEL, MEMBER_NAME
+		  FROM MESSAGE
+	INNER JOIN MEMBER
+	        ON MESSAGE_SENDER_NO = MEMBER_NO
+	     WHERE MESSAGE_TARGET_NO = #{messageTargetNo}
+	       AND MESSAGE_SEND_DEL = 'N'
+	       AND MESSAGE_NO = #{messageNo}
+	</select>
+	
+	<select id="SenderOne" resultMap="messageDto">	<!-- 받은 메세지 -->
+		SELECT MESSAGE_NO, MESSAGE_SENDER_NO, MESSAGE_TARGET_NO, MESSAGE_CONTENT, MESSAGE_DATE,
+			   MESSAGE_CHECKED, MESSAGE_SEND_DEL, MESSAGE_TARGET_DEL, MEMBER_NAME 
+		  FROM MESSAGE
+	INNER JOIN MEMBER 
+		    ON MESSAGE_TARGET_NO = MEMBER_NO 
+		 WHERE MESSAGE_SENDER_NO = #{messageSenderNo}
+		   AND MESSAGE_TARGET_DEL='N' 
+		   AND MESSAGE_NO=#{messageNo}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO MESSAGE 
+		VALUES(MESSAGE_SEQ.NEXTVAL,#{messageSenderNo},#{messageTargetNo},
+				#{messageContent},SYSDATE,'N','N','N')
+	</insert>
+	
+	<update id="updateCheck">
+		UPDATE MESSAGE SET MESSAGE_CHECKED = 'Y' WHERE MESSAGE_NO = #{messageNo}
+	</update>
+	
+	<update id = "delSend">
+		UPDATE MESSAGE SET MESSAGE_SEND_DEL = 'Y' WHERE MESSAGE_NO = #{messageNo}
+	</update>
+	
+	<update id="delTarget">
+		UPDATE MESSAGE SET MESSAGE_TARGET_DEL = 'Y' WHERE MESSAGE_NO = #{messageNo}
+	</update>
+	
+	<!-- 받는 이의 정보를 가져온다 -->
+	<select id="selectMessageReceiver" parameterType="map" resultMap="MessageReceiverDto">
+		SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME
+		  FROM MEMBER
+		 WHERE MEMBER_ENA = 'Y'
+		   AND MEMBER_NO = #{memberNo}
+	</select>
+	
+	<select id="selectMessageNo" resultMap="messageDto">
+		SELECT MAX(MESSAGE_NO) as MESSAGE_NO,MEMBER_NAME
+		FROM MESSAGE INNER JOIN MEMBER ON MESSAGE_SENDER_NO=MEMBER_NO
+		WHERE MESSAGE_SENDER_NO = #{messageSenderNo} GROUP BY MEMBER_NAME
+	</select>
+
+	
+</mapper>

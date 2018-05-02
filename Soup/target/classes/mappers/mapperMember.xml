@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.home">
+  <resultMap type="com.hk.soup.home.dto.MemberDto" id="MemberDtoMap">
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="MEMBER_EMAIL" property="memberEmail" />
+		<result column="MEMBER_PW" property="memberPw" />
+		<result column="MEMBER_ISTMP" property="memberisTmp"/>
+		<result column="MEMBER_NAME" property="memberName" />
+		<result column="MEMBER_TEL" property="memberTel" />
+		<result column="MEMBER_FACE" property="memberFace" />
+		<result column="MEMBER_GRADE" property="memberGrade" />
+		<result column="MEMBER_ENA" property="memberEna" />
+		<result column="MEMBER_JOIN_DATE" property="memberJoinDate" />
+		<result column="MEMBER_DROP_DATE" property="memberDropDate" />
+	</resultMap>
+	
+	<!-- 회원목록출력  -->
+	<select id="selectAll" resultMap="MemberDtoMap">
+		SELECT * FROM MEMBER
+	</select>
+
+	<!--회원 가입-->
+	<insert id="insert" parameterType="MemberDto">
+		INSERT INTO MEMBER VALUES(MEMBER_SEQUENCE.NEXTVAL,#{memberEmail},#{memberPw},'N',#{memberName},#{memberTel},#{memberFace},'USER','Y',SYSDATE,NULL)
+	</insert>
+	
+	<!--로그인 -->
+	<select id="selectOne" parameterType="map" resultMap="MemberDtoMap">
+		SELECT * FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail} AND MEMBER_PW=#{memberPw}
+	</select>
+	
+	<!--회원 정보 수정 -->
+	<update id="update" parameterType="MemberDto">
+		UPDATE MEMBER SET MEMBER_PW=#{memberPw},MEMBER_NAME=#{memberName},MEMBER_FACE=#{memberFace} WHERE MEMBER_EMAIL=#{memberEmail} AND MEMBER_TEL=#{memberTel} 	
+	</update>
+	
+	<!--회원 탈퇴 -->
+	<update id="userOut" parameterType="string" >
+		UPDATE MEMBER SET MEMBER_ENA='N' WHERE MEMBER_EMAIL=#{memberEmail}
+	</update> 
+	
+	<!--이메일 유효성 검사 -->
+	<select id="checkId" parameterType="string" resultType="int">
+		SELECT NVL(COUNT(*),0) FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail}
+	</select>
+	
+	<!--전화번호 유효성 검사 -->
+	<select id="checkTel" parameterType="string" resultType="int">
+		SELECT NVL(COUNT(*),0) FROM MEMBER WHERE MEMBER_TEL=#{memberTel}
+	</select>
+	
+	<!--아이디 찾기 -->
+	<select id="idSearch" parameterType="map" resultType="string">
+		SELECT MEMBER_EMAIL FROM MEMBER WHERE MEMBER_NAME=#{memberName} AND MEMBER_TEL=#{memberTel}
+	</select>
+	
+	<!--비밀번호 찾기 [이메일로 랜덤비밀번호 전송]-->
+	<update id="pwSearch" parameterType="map">
+		UPDATE MEMBER SET MEMBER_ISTMP='Y' WHERE MEMBER_NAME=#{memberName} AND MEMBER_TEL=#{memberTel} AND MEMBER_EMAIL=#{memberEmail}
+	</update>
+	
+	<select id="PwselectOne" parameterType="string" resultType="string">
+		SELECT MEMBER_ISTMP FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail}
+	</select>
+	
+	<!-- <update id="PwselectOne" parameterType="MemberDto">
+		UPDATE MEMBER SET MEMBER_ISTMP='N', MEMBER_PW=${memberPw} WHERE MEMBER_EMAIL={memberEmail}
+	</update> -->
+	
+	<insert id="insertVisit" parameterType="map">
+		INSERT INTO VISIT VALUES(SYSDATE)
+	</insert>
+	
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+ 
+<tiles-definitions>
+	<!-- nav -->
+	<definition name="layouts-manage-tiles" template="/WEB-INF/views/common/manage-layouts.jsp">
+		<put-attribute name="header"    	value="/WEB-INF/views/common/default-header.jsp" />
+	  	<put-attribute name="nav"    	value="/WEB-INF/views/common/default-nav.jsp" />
+	  	<put-attribute name="content"   	value="" />
+	</definition>
+	
+	<definition name="user/soup/*Manage.tiles" extends="layouts-manage-tiles">
+	  	<put-attribute name="content"   value="/WEB-INF/views/user/soup/{1}Manage.jsp" />
+	</definition>
+	<!-- /nav -->
+	
+	<!-- admin page -->
+	<definition name="layouts-admin-tiles" template="/WEB-INF/views/admin/admin-layouts.jsp">
+		<put-attribute name="header"    	value="/WEB-INF/views/admin/admin-header.jsp" />
+	  	<put-attribute name="nav"    	value="/WEB-INF/views/admin/admin-nav.jsp" />
+	  	<put-attribute name="left"    	value="/WEB-INF/views/admin/admin-left.jsp" />
+	  	<put-attribute name="content"   	value="" />
+	</definition>
+	
+	<definition name="admin/*.adminTiles" extends="layouts-admin-tiles">
+	  	<put-attribute name="content"   value="/WEB-INF/views/admin/{1}.jsp" />
+	</definition>
+	<!-- /admin page -->
+	
+	<!-- nav + filter + footer-->
+	<definition name="layouts-filter-tiles" template="/WEB-INF/views/common/filter-layouts.jsp">
+		<put-attribute name="header"    	value="/WEB-INF/views/common/default-header.jsp" />
+	  	<put-attribute name="nav"    	value="/WEB-INF/views/common/default-nav.jsp" />
+	  	<put-attribute name="filter"    	value="/WEB-INF/views/search/soup-filter.jsp" />
+	  	<put-attribute name="content"   	value="" />
+	  	<put-attribute name="footer"    value="/WEB-INF/views/common/default-footer.jsp" />
+	</definition>
+	
+	<definition name="search/search*.tiles" extends="layouts-filter-tiles">
+	  	<put-attribute name="content"   value="/WEB-INF/views/search/search{1}.jsp" />
+	</definition>
+	<!-- /nav + filter + footer-->
+	
+	<!-- nav + footer -->
+	<definition name="layouts-main-tiles" template="/WEB-INF/views/common/default-layouts.jsp">
+		<put-attribute name="header"    value="/WEB-INF/views/common/default-header.jsp" />
+	  	<put-attribute name="nav"    	value="/WEB-INF/views/common/default-nav.jsp" />
+	  	<put-attribute name="content"   value="" />
+	  	<put-attribute name="footer"    value="/WEB-INF/views/common/default-footer.jsp" />
+	</definition>
+	
+	
+	<definition name="*/*.tiles" extends="layouts-main-tiles">
+	  	<put-attribute name="content"   value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+	
+	<definition name="*/*/*.tiles" extends="layouts-main-tiles">
+	  	<put-attribute name="content"   value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+	</definition>
+	<!-- /nav + footer -->
+
+</tiles-definitions>

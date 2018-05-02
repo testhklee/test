@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjimApply">
+
+	<!-- 스/프 검색 맵퍼 -->
+	<resultMap type="com.hk.soup.search.dto.SoupSearchDto" id="soupSearchDto">
+		<result column="SOUP_NO" property="soupNo" />
+		<result column="SOUP_GUBUN" property="soupGubun" />
+		<result column="SOUP_TITLE" property="soupTitle" />
+		<result column="SOUP_FIELD1" property="soupField1" />
+		<result column="SOUP_FIELD2" property="soupField2" />
+		<result column="SOUP_RECRUIT_END_DATE" property="soupRecruitEndDate" />
+		<result column="SOUP_MEMBER_MIN" property="soupMemberMin" />
+		<result column="SOUP_MEMBER_MAX" property="soupMemberMax" />
+		<result column="SOUP_ADDR1" property="soupAddr1" />
+		<result column="SOUP_ADDR2" property="soupAddr2" />
+		<result column="SOUP_START_DATE" property="soupStartDate" />
+		<result column="SOUP_END_DATE" property="soupEndDate" />
+		<result column="SOUP_DAY" property="soupDay" />
+		<result column="SOUP_START_TIME" property="soupStartTime" />
+		<result column="SOUP_END_TIME" property="soupEndTime" />
+		<result column="SOUP_PRICE" property="soupPrice" />
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="MEMBER_EMAIL" property="memberEmail" />
+		<result column="MEMBER_NAME" property="memberName" />
+		<result column="MEMBER_FACE" property="memberFace" />
+	</resultMap>
+
+	<select id="selectApplyList" parameterType="map" resultMap="soupSearchDto">
+		SELECT SOUP_NO, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_ADDR1, SOUP_ADDR2, SOUP_GUBUN
+		  FROM SOUP_APPLY
+		 INNER JOIN SOUP
+		 USING (SOUP_NO)
+		 WHERE MEMBER_NO = #{memberNo}
+		   AND SOUP_STATUS = 'RECRUIT'
+		   AND SOUP_GUBUN != 'PS'
+		   AND SOUP_APPLY_ENTERED = 'N'
+		   AND SOUP_NO NOT IN
+		   			(SELECT SOUP_NO			<!-- 본인이 있는 스프는 필터 -->
+		   			   FROM SOUP_MEMBER
+		   			  WHERE MEMBER_NO = #{memberNo}
+		   			    AND SOUP_MEMBER_STATUS = 'BELONG')
+		 ORDER BY SOUP_APPLY_DATE DESC
+	</select>
+	
+	<select id="selectJjimList" parameterType="map" resultMap="soupSearchDto">
+		SELECT SOUP_NO, SOUP_TITLE, SOUP_FIELD1, SOUP_FIELD2, SOUP_ADDR1, SOUP_ADDR2, SOUP_GUBUN
+		  FROM JJIM
+		 INNER JOIN SOUP
+		 USING (SOUP_NO)
+		 WHERE MEMBER_NO = #{memberNo}
+		   AND SOUP_STATUS = 'RECRUIT'
+		 ORDER BY JJIM_DATE DESC
+	</select>
+	
+</mapper>

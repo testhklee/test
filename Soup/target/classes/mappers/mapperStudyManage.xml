@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soup.study.manage">
+
+	<resultMap type="com.hk.soup.soup.study.dto.StudyInfoDto" id="StudyInfoDto">
+		<result column="SOUP_TITLE" property="soupTitle"/>
+		<result column="SOUP_CONTENT" property="soupContent"/>
+	</resultMap>
+
+	<resultMap type="com.hk.soup.soup.study.dto.StudyMemoDto" id="StudyMemoDto">
+		<result column="member_no" property="memberNo"/>
+		<result column="soup_no" property="soupNo"/>
+		<result column="memo_content" property="memoContent"/>
+		<result column="memo_date" property="memoDate"/>
+	</resultMap>
+	
+	<resultMap type="com.hk.soup.soup.study.dto.StudyScheduleDto" id="StudyScheduleDtoMap">
+		<result column="study_schedule_dday" property="studyScheduleDday"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="soup_no" property="soupNo"/>
+		<result column="study_schedule_title" property="studyScheduleTitle"/>
+		<result column="study_schedule_content" property="studyScheduleContent"/>
+		<result column="study_schedule_write_date" property="studyScheduleWriteDate"/>
+		<result column="study_schedule_latitude" property="studyScheduleLatitude"/>
+		<result column="study_schedule_longtude" property="studyScheduleLongtude"/>
+		<result column="study_schedule_ismain" property="studyScheduleIsmain"/>
+	</resultMap>
+	
+	<resultMap type="com.hk.soup.soup.study.dto.StudyCurriculumDto" id="StudyCurriculumDtoMap">
+		<result column="SOUP_NO" property="soupNo"/>
+		<result column="curi_no" property="curiNo"/>
+		<result column="title" property="title"/>
+		<result column="date_close" property="dateClose"/>		
+	</resultMap>
+	
+	<resultMap type="com.hk.soup.soup.study.dto.StudyEvaluateDto" id="StudyEvaluateDtoMap">
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="SOUP_NO" property="soupNo"/>
+		<result column="curi_no" property="curiNo"/>
+		<result column="item" property="item"/>
+		<result column="item_val" property="itemVal"/>		
+	</resultMap>
+	
+	<resultMap type="com.hk.soup.soup.study.dto.StudyBoardDto" id="StudyBoardDtoMap">
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="SOUP_NO" property="soupNo"/>
+		<result column="title" property="title"/>
+		<result column="contents" property="contents"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="date_created" property="dateCreated"/>
+		<result column="name" property="name"/>
+		<result column="notice_check" property="noticeCheck"/>
+		<result column="hits" property="hits"/>
+		<result column="file_name" property="fileName"/>
+		<result column="file_route" property="fileRoute"/>
+		<result column="enable" property="enable"/>
+	</resultMap>
+	
+	<select id="MyPosition" parameterType="map" resultType="string">
+		SELECT SOUP_MEMBER_GUBUN FROM SOUP_MEMBER WHERE SOUP_NO=#{soupNo} and MEMBER_NO=#{memberNo}
+	</select>
+	
+	<select id="leaderNum" resultType="int">
+		SELECT MEMBER_NO FROM SOUP_MEMBER WHERE SOUP_MEMBER_GUBUN='L'
+	</select>
+	
+	<select id="studyInfo" parameterType="int" resultMap="StudyInfoDto">
+		SELECT * FROM SOUP WHERE SOUP_NO=#{soupNo}
+	</select>
+	
+	<select id="memoLoad" parameterType="map" resultMap="StudyMemoDto">
+		select * from study_memo where member_no=#{memberNo} and soup_no=#{soupNo}
+	</select>
+	
+	<select id="memoInsert" parameterType="StudyMemoDto">
+		insert into study_memo(member_no, soup_no, memo_date) values(#{memberNo}, #{soupNo}, sysdate)
+	</select>
+	
+	<select id="memoUpdate" parameterType="StudyMemoDto">
+		update study_memo set memo_content=#{memoContent}, memo_date=sysdate where member_no=#{memberNo} and soup_no=#{soupNo}
+	</select>
+	
+	<select id="scheduleInsert" parameterType="StudyScheduleDto">
+		insert into study_schedule values(#{studyScheduleDday}, #{memberNo}, #{soupNo}, #{studyScheduleTitle}, #{studyScheduleContent}, sysdate, #{studyScheduleLatitude}, #{studyScheduleLongtude}, 'n')
+	</select>
+	
+	<select id="scheduleUpdate" parameterType="StudyScheduleDto">
+		update study_schedule set study_schedule_dday=#{studyScheduleDday}, study_schedule_title=#{studyScheduleTitle}, study_schedule_content=#{studyScheduleContent}, study_schedule_write_date=sysdate, study_schedule_latitude=#{studyScheduleLatitude}, study_schedule_longtude=#{studyScheduleLongtude} where soup_no=#{soupNo} and study_schedule_dday=#{studyScheduleDday} and study_schedule_title=#{studyScheduleTitle}
+	</select>
+	
+	<select id="scheduleDelete" parameterType="StudyScheduleDto">
+		delete from study_schedule where soup_no=#{soupNo} and study_schedule_dday=#{studyScheduleDday} and study_schedule_title=#{studyScheduleTitle}
+	</select>
+	
+	<select id="scheduleSelectAll" parameterType="map" resultMap="StudyScheduleDtoMap">
+		select * from study_schedule where soup_no=#{soupNo}
+	</select>
+	
+	<select id="dateList" parameterType="StudyScheduleDto" resultMap="StudyScheduleDtoMap">
+		select * from study_schedule where soup_no=#{soupNo} and study_schedule_dday=#{studyScheduleDday}
+	</select>
+	
+	<select id="dateDetail" parameterType="StudyScheduleDto" resultMap="StudyScheduleDtoMap">
+		select * from study_schedule where soup_no=#{soupNo} and study_schedule_dday=#{studyScheduleDday} and study_schedule_title=#{studyScheduleTitle}
+	</select>
+	
+	<select id="curriculumInsert" parameterType="StudyCurriculumDto">
+		insert into study_curriculum values(#{soupNo}, #{curiNo}, #{title}, #{dateClose})
+	</select>
+	
+	<select id="curriculumList" parameterType="int" resultMap="StudyCurriculumDtoMap">
+		select * from study_curriculum where SOUP_NO=#{soupNo}
+	</select>
+	
+	<insert id="evaluatInsert" parameterType="map">
+		insert all
+		<foreach item="item" collection="list">
+           into study_evaluate values(#{item.memberNo}, #{item.soupNo}, #{item.curiNo}, #{item.item}, #{item.itemVal})
+        </foreach>
+        SELECT * FROM DUAL
+	</insert>
+	
+	<select id="delCurriculum" parameterType="map">
+		delete from study_curriculum where SOUP_NO=#{soupNo} and curi_no=#{curiNo}
+	</select>
+	
+	<select id="evaluatList" parameterType="StudyEvaluateDto" resultMap="StudyEvaluateDtoMap">
+		select * from study_evaluate where MEMBER_NO=#{memberNo} and SOUP_NO=#{soupNo} and curi_no=#{curiNo}		
+	</select>
+	
+	<select id="chartEvaluatList" parameterType="StudyEvaluateDto" resultMap="StudyEvaluateDtoMap">
+		select * from study_evaluate where MEMBER_NO=#{memberNo} and SOUP_NO=#{soupNo}
+	</select>
+	
+	<select id="allEvaluatAvg" parameterType="map" resultType="double">
+		select ROUND(avg(item_val),2) from study_evaluate where SOUP_NO=#{soupNo} and not MEMBER_NO=#{memberNo} and not item='코멘트' group by curi_no
+	</select>
+	
+	<select id="allEvaluatCommentNum" parameterType="map" resultType="int">
+		select curi_no from study_evaluate where SOUP_NO=#{soupNo} and not MEMBER_NO=#{memberNo} and item='코멘트' group by curi_no
+	</select>
+	
+	<select id="allEvaluatComment" parameterType="map" resultMap="StudyEvaluateDtoMap">
+		select * from study_evaluate where SOUP_NO=#{soupNo} and not MEMBER_NO=#{memberNo} and item='코멘트'
+	</select>
+	
+	<select id="completeEvaluat" parameterType="int" resultType="int">
+		select count(distinct MEMBER_NO) from study_evaluate where SOUP_NO=#{soupNo} group by curi_no
+	</select>
+	
+	<select id="delEvaluat" parameterType="map">
+		delete from study_evaluate where SOUP_NO=#{soupNo} and curi_no=#{curiNo}
+	</select>
+	
+	<select id="updateEvaluat" parameterType="map">
+		<foreach item="item" collection="list" separator=";" open="DECLARE BEGIN" close="; END;">
+			update study_evaluate set item_val=#{item.itemVal} where SOUP_NO=#{item.soupNo} and curi_no=#{item.curiNo} and MEMBER_NO=#{item.memberNo} and item=#{item.item}
+		</foreach>		
+	</select>
+	
+	<select id="studyBoardInsert" parameterType="StudyBoardDto">
+		insert into study_board values(#{memberNo}, #{soupNo}, #{title}, #{contents}, #{boardNo}, sysdate, #{name}, 'Y', 0, null, null, 'Y')
+	</select>
+	
+	<select id="studyBoardList" parameterType="int" resultMap="StudyBoardDtoMap">
+		select * from study_board where 1=1 and SOUP_NO=#{soupNo} and enable='Y' order by board_no desc
+	</select>
+	
+	<select id="studyBoardDetail" parameterType="map" resultMap="StudyBoardDtoMap">
+		select * from study_board where SOUP_NO=#{soupNo} and board_no=#{boardNo}
+	</select>
+	
+	<select id="studyBoardHit" parameterType="map">
+		update study_board set hits=hits+1 where board_no=#{boardNo} and SOUP_NO=#{soupNo}
+	</select>
+	
+	<select id="studyBoardDelete" parameterType="map">
+		update study_board set enable='N' where board_no=#{boardNo} and SOUP_NO=#{soupNo}
+	</select>
+	
+</mapper>
+

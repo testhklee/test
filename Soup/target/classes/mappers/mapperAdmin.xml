@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.admin">
+
+	<resultMap type="com.hk.soup.home.dto.MemberDto" id="MemberDto">
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="MEMBER_NAME" property="memberName"/>
+		<result column="MEMBER_TEL" property="memberTel"/>
+		<result column="MEMBER_GRADE" property="memberGrade"/>
+		<result column="MEMBER_JOIN_DATE" property="memberJoinDate"/>
+		<result column="MEMBER_DROP_DATE" property="memberDropDate"/>
+		
+	</resultMap>
+
+	<!-- 오늘 방문자 수 -->
+	<select id="selectTodayVisitor" resultType="int">
+		SELECT COUNT(*)
+		  FROM VISIT
+		 WHERE VISIT_DATE BETWEEN TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) 
+		 					  AND SYSDATE
+	</select>
+	
+	<select id="selectAdminMemberList" resultMap="MemberDto">
+		SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NAME, MEMBER_TEL, MEMBER_GRADE, MEMBER_JOINDATE, MEMBER_DROPDATE
+		  FROM MEMBER
+	</select>
+	
+</mapper>

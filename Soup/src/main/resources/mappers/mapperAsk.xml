@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ask">
+	<resultMap type="com.hk.soup.customer.dto.QuestionDto" id="questionDto">
+		<result column="QUESTION_NO" property="questionNo"/>	
+		<result column="MEMBER_NO" property="memberNo"/>	
+		<result column="QUESTION_TITLE" property="questionTitle"/>	
+		<result column="QUESTION_CONTENT" property="questionContent"/>	
+		<result column="QUESTION_GUBUN" property="questionGubun"/>	
+		<result column="QUESTION_DATE" property="questionDate"/>	
+		<result column="QUESTION_YN" property="questionYn"/>
+		<result column="MEMBER_NAME" property="memberName"/>
+	</resultMap>
+	<resultMap type="com.hk.soup.customer.dto.AnswerDto" id="answerDto">
+		<result column="ANSWER_NO" property="answerNo"/>
+		<result column="QUESTION_NO" property="questionNo"/>
+		<result column="ANSWER_CONTENT" property="answerContent"/>
+		<result column="ANSWER_DATE" property="answerDate"/>
+		<result column="QUESTION_TITLE" property="questionTitle"/>	
+		<result column="QUESTION_CONTENT" property="questionContent"/>	
+		<result column="QUESTION_DATE" property="questionDate"/>
+	</resultMap>
+	<resultMap type="com.hk.soup.home.dto.MemberDto" id="memberDto">
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="MEMBER_NAME" property="memberName"/>
+	</resultMap>
+ 
+ 
+ 	<select id="selectUser" resultMap="questionDto">	
+ 		SELECT * 
+ 		FROM QUESTION 
+ 		WHERE MEMBER_NO = #{memberNo} 
+ 		ORDER BY QUESTION_YN DESC,QUESTION_DATE
+ 	</select>
+ 	<select id="selectUserList" resultMap="questionDto">	
+ 		SELECT * 
+		FROM(
+			SELECT ROWNUM AS RN, A.* 
+			FROM(
+ 				SELECT * 
+ 				FROM QUESTION 
+ 				WHERE MEMBER_NO = #{memberNo} 
+ 			ORDER BY QUESTION_YN DESC,QUESTION_DATE DESC) A ) 
+		WHERE RN BETWEEN #{start} AND #{end}
+ 	</select>
+ 	<select id="selectAdmin" resultMap="questionDto">
+ 		SELECT * 
+ 		FROM QUESTION 
+ 		JOIN MEMBER USING(MEMBER_NO) 
+ 		ORDER BY QUESTION_YN,QUESTION_DATE DESC
+ 	</select>
+ 	<select id="selectOne" resultMap="questionDto">
+ 		SELECT * FROM QUESTION JOIN MEMBER USING(MEMBER_NO) WHERE QUESTION_NO = #{questionNo}
+ 	</select>
+ 	<select id="selectAnswer" resultMap="answerDto">
+ 		SELECT * FROM ANSWER JOIN QUESTION USING(QUESTION_NO) WHERE QUESTION_NO=#{questionNo}
+ 	</select>
+ 	<insert id="question">
+ 		INSERT INTO QUESTION VALUES(QUESTION_SEQ.NEXTVAL,#{memberNo},#{questionTitle},#{questionContent},#{questionGubun},SYSDATE,'N')
+ 	</insert>
+ 	<insert id="answer">
+ 		INSERT INTO ANSWER VALUES(ANSWER_SEQ.NEXTVAL,#{questionNo},#{answerContent},SYSDATE)
+ 	</insert>
+ 	<update id="update">
+ 		UPDATE QUESTION SET QUESTION_YN='Y' WHERE QUESTION_NO=#{questionNo}
+ 	</update>
+	<select id="selectMemberNo" resultType="Integer">
+		SELECT MEMBER_NO FROM ANSWER JOIN QUESTION USING(QUESTION_NO) WHERE QUESTION_NO=#{questionNo}
+	</select>
+ 
+ 
+ 
+ 
+</mapper>

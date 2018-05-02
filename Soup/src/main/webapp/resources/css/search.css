@@ -1,0 +1,54 @@
+h2 {
+	height: 30px;
+}
+
+li.is-visible, .cd-pricing-wrapper {
+	width: 378.297px;
+	height: auto;
+	padding: 0px;
+}
+
+img.cardImg {
+	width: 345px;
+	height: 240px;
+}
+
+hr.myhr {
+	border: 1;
+	background: #ccc;
+	margin: 0px;
+}
+
+li.li-title {
+	font-weight: bold;
+	font-size: x-large;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+li.li-etc {
+	font-size: small;
+	color: red;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+.cd-pricing-footer {
+	padding: 0px
+}
+
+.cd-has-margins .cd-pricing-list>li {
+	margin: 10px;
+}
+
+.cd-pricing-list {
+	width: 1300px;
+}
+
+.cd-has-margins .cd-pricing-list>li {
+	width: 378.297px;
+}
+
+section.sections {
+	padding-bottom: 0px;
+}

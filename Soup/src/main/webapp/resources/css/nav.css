@@ -1,0 +1,33 @@
+.navigation a{ color: #555; text-decoration: none; outline: none; display: block;}
+.overlay{ position: absolute; left: 0; top: 0; height: 100%; width: 100%;}
+ul{ margin: 0; padding: 0; list-style: none;}
+
+
+/* Navigation */
+.navigation{ float: right; margin: 10px 30px 0 0;}
+.navigation > ul > li{ float: left; position: relative;}
+.navigation > ul > li::before{ content: "/"; float: left; margin: 30px 0 0; color: #ececec; font-size: 16px;}
+.navigation > ul > li:first-child::before{ display: none;}
+.navigation > ul > li > a{ font-size: 14px; color: #333; text-transform: uppercase; font-weight: bold; text-align: center; padding: 6px;
+position: relative;}
+.navigation > ul > li a i{ position: absolute; top: 0; left: 50%; font-size: 16px; margin: 0 0 0 -10px; color: #636363;}
+.navigation > ul > li > a::before{ content: ""; position: absolute; left: 0; height: 100%; width: 100%; bottom: 0; border-bottom: 4px solid; visibility: hidden; opacity: 0;}
+.navigation > ul > li.active a.title{ color: rgb(130, 202, 156);}
+
+/* Dropdown */
+.navigation ul li > ul{ list-style: none; margin: 0; padding: 0; top: 80%; border-radius: 0 0 4px 4px; position: absolute; width: 230px; 
+visibility: hidden; opacity: 0; background: #fff; z-index: 100; border-bottom: 3px solid;
+-webkit-box-shadow: inset 0px 2px 3px 0px rgba(50, 50, 50, 0.24);
+-moz-box-shadow: inset 0px 2px 3px 0px rgba(50, 50, 50, 0.24);
+box-shadow: inset 0px 2px 3px 0px rgba(50, 50, 50, 0.24);}
+.navigation ul li ul li{ position: relative; float: none; border-bottom: 1px solid #e8e8e8;}
+.navigation ul li ul li:last-child{ border: 0;}
+.navigation ul li ul li a{ width: 100%; position: relative; color: #333; padding: 15px 30px; font-size: 14px; font-weight: bold; text-transform: uppercase; text-transform: capitalize; text-align: left;} 
+.navigation ul li ul li a:hover{ color: #82ca9c;}
+.navigation ul li ul li a::before{ z-index: -1; content: ""; position: absolute; left: 0; height: 100%; width: 0; top: 0;}
+.navigation ul li ul li a:hover::before{ width: 100%;}
+.navigation ul li ul li .mega-dropdown a{ padding: 0;}
+.navigation ul li.dropdown-icon > a::after{ content: "\f107"; font-family: fontawesome; position: absolute; margin: 0 0 0 10px;}
+.navigation ul li ul li.dropdown-icon > a::after{ content: "\f105"; margin: 0 0 0 40px;} 
+.navigation ul li ul li a i{ color: #666; position: absolute; right: 10px; top: 50%; margin: -7px 0 0;}
+.navigation ul li:hover > ul{ visibility: visible; opacity: 1; top: 100%;}

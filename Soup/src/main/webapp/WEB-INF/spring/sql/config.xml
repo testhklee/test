@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.hk.soup.soup.study.dto.StudyMemoDto" alias="StudyMemoDto"/>
+		<typeAlias type="com.hk.soup.home.dto.MemberDto" alias="MemberDto"/>
+		<typeAlias type="com.hk.soup.customer.dto.NoticeDto" alias="NoticeDto"/>
+		<typeAlias type="com.hk.soup.soup.study.dto.StudyScheduleDto" alias="StudyScheduleDto"/>
+		<typeAlias type="com.hk.soup.soup.study.dto.StudyCurriculumDto" alias="StudyCurriculumDto"/>
+		<typeAlias type="com.hk.soup.search.dto.SoupDto" alias="soupDto"/>
+		<typeAlias type="com.hk.soup.search.dto.SoupCreateDto" alias="soupCreateDto"/>
+		<typeAlias type="com.hk.soup.search.dto.SoupApplyDto" alias="soupApplyDto"/>
+		<typeAlias type="com.hk.soup.search.dto.SoupDetailDto" alias="soupDetailDto"/>
+		<typeAlias type="com.hk.soup.search.dto.SoupFilterDto" alias="soupFilterDto"/>
+		<typeAlias type="com.hk.soup.search.dto.SoupJJimDto" alias="soupJJimDto"/>
+		<typeAlias type="com.hk.soup.soup.dto.SoupMemberDto" alias="soupMemberDto"/>
+		<typeAlias type="com.hk.soup.soup.study.dto.StudyEvaluateDto" alias="StudyEvaluateDto"/>
+		<typeAlias type="com.hk.soup.soup.study.dto.StudyBoardDto" alias="StudyBoardDto"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="/mappers/mapperEx.xml"/>
+		<mapper resource="/mappers/mapperSoup.xml"/>
+		<mapper resource="/mappers/mapperStudyManage.xml"/>
+		<mapper resource="/mappers/mapperStudyRoom.xml"/>
+		<mapper resource="/mappers/mapperMember.xml"/>
+		<mapper resource="/mappers/mapperProjectManage.xml"/>
+		<mapper resource="/mappers/mapperNotice.xml"/>
+		<mapper resource="/mappers/mapperFaq.xml"/>
+		<mapper resource="/mappers/mapperAsk.xml"/>
+		<mapper resource="/mappers/mapperMember.xml"/>
+		<mapper resource="/mappers/mapperProjectManage.xml"/>
+		<mapper resource="/mappers/mapperAlarm.xml"/>
+		<mapper resource="/mappers/mapperMessage.xml"/>
+		<mapper resource="/mappers/mapperJjimApply.xml"/>
+		<mapper resource="/mappers/mapperAdmin.xml"/>
+		<mapper resource="/mappers/mapperBusiness.xml"/>
+		<mapper resource="/mappers/mapperTeacher.xml"/>
+	</mappers>
+
+</configuration>

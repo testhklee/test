@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.projectManage">
+
+	<resultMap type="com.hk.soup.soup.project.dto.ProjectBoardDto" id="ProjectBoardDtoMap">
+		<result column="PROJECT_BOARD_NO" property="projectBoardNo"/>
+		<result column="PROJECT_BOARD_ORDER" property="projectBoardOrder"/>
+		<result column="SOUP_NO" property="soupNo"/>
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="MEMBER_NAME" property="memberName"/>
+		<result column="PROJECT_BOARD_TITLE" property="projectBoardTitle"/>
+		<result column="PROJECT_BOARD_CONTENT" property="projectBoardContent"/>
+		<result column="PROJECT_BOARD_GUBUN" property="projectBoardGubun"/>
+		<result column="PROJECT_BOARD_SCOPE" property="projectBoardScope"/>
+		<result column="PROJECT_BOARD_FIXED" property="projectBoardFixed"/>
+		<result column="PROJECT_BOARD_START_DATE" property="projectBoardStartDate"/>
+		<result column="PROJECT_BOARD_END_DATE" property="projectBoardEndDate"/>
+		<result column="PROJECT_BOARD_FILE_NAME" property="projectBoardFileName"/>
+		<result column="PROJECT_BOARD_FILE_URL" property="projectBoardFileUrl"/>
+		<result column="PROJECT_BOARD_CHECKLIST_NAME" property="projectBoardChecklistName"/>
+	</resultMap>
+	
+	<resultMap type="com.hk.soup.soup.project.dto.ProjectChecklistDto" id="ProjectChecklistDto">
+		<result column="PROJECT_BOARD_NO" property="projectBoardNo"/>
+		<result column="PROJECT_CHECKLIST_CONTENT" property="projectChecklistContent"/>
+		<result column="PROJECT_CHECKLIST_CHECKED" property="projectChecklistChecked"/>
+		<result column="PROJECT_CHECKLIST_DATE" property="projectChecklistDate"/>
+	</resultMap>
+	
+	<resultMap type="com.hk.soup.soup.project.dto.ProjectActivityDto" id="ProjectActivityDto">
+		<result column="MEMBER_NAME" property="memberName"/>
+		<result column="MEMBER_FACE" property="memberFace"/>
+		<result column="PROJECT_ACTIVITY_CONTENT" property="projectActivityContent"/>
+		<result column="PROJECT_ACTIVITY_DATE" property="projectActivityDate"/>
+	</resultMap>
+	
+	
+	<resultMap type="com.hk.soup.soup.project.dto.ProjectInfoDto" id="projectInfoDto">
+		<result column="LEADER_NO" property="leaderNo"/>
+		<result column="SOUP_STATUS" property="soupStatus"/>
+		<result column="SOUP_TITLE" property="soupTitle"/>
+	</resultMap>
+	
+	<resultMap type="com.hk.soup.soup.project.dto.ProjectBoardDateDto" id="projectBoardDateDto">
+		<result column="PROJECT_BOARD_TITLE" property="title"/>
+		<result column="PROJECT_BOARD_START_DATE" property="start"/>
+		<result column="PROJECT_BOARD_END_DATE" property="end"/>
+	</resultMap>
+	
+	<!-- 해당 프로젝트의 게시물을 가져온다 -->
+	<select id="selectProjectBoardList" parameterType="map" resultMap="ProjectBoardDtoMap">
+		SELECT PROJECT_BOARD_NO, PROJECT_BOARD_ORDER, MEMBER_NO, MEMBER_NAME, PROJECT_BOARD_TITLE, PROJECT_BOARD_CONTENT,
+		       PROJECT_BOARD_SCOPE, PROJECT_BOARD_FIXED, PROJECT_BOARD_START_DATE, PROJECT_BOARD_END_DATE, 
+		       PROJECT_BOARD_FILE_NAME, PROJECT_BOARD_FILE_URL, PROJECT_BOARD_CHECKLIST_NAME
+		  FROM PROJECT_BOARD
+		 INNER JOIN MEMBER
+		 USING (MEMBER_NO)
+		 WHERE SOUP_NO = #{soupNo}
+		       AND PROJECT_BOARD_GUBUN = #{gubun}
+		 <choose>
+		 	<when test='gubun == "NOTICE" || gubun == "RESOURCE"'>
+		 		ORDER BY PROJECT_BOARD_DATE ASC
+		 	</when>
+		 	<otherwise>
+				ORDER BY PROJECT_BOARD_ORDER ASC
+		 	</otherwise>
+		 </choose>
+	</select>
+	
+	<!-- 해당 게시물의 체크리스트 목록을 가져온다 -->
+	<select id="selectChecklistList" parameterType="map" resultMap="ProjectChecklistDto">
+		SELECT PROJECT_BOARD_NO, PROJECT_CHECKLIST_CONTENT, PROJECT_CHECKLIST_CHECKED
+		  FROM PROJECT_CHECKLIST
+		 WHERE PROJECT_BOARD_NO = #{projectBoardNo}
+		 ORDER BY PROJECT_CHECKLIST_DATE ASC
+	</select>
+	
+	<!-- 해당 프로젝트의 정보를 가져온다 -->
+	<select id="selectProjectInfo" parameterType="map" resultMap="projectInfoDto">
+		SELECT MEMBER_NO AS LEADER_NO, SOUP_STATUS, SOUP_TITLE
+		  FROM SOUP_MEMBER
+		  JOIN SOUP
+		 USING (SOUP_NO)
+		 WHERE SOUP_NO = #{soupNo}
+		   AND SOUP_MEMBER_GUBUN = 'L'
+	</select>
+	
+	<!-- 프로젝트 활동 내역을 가져온다 -->
+	<select id="selectProjectActivityList" parameterType="map" resultMap="ProjectActivityDto">
+		SELECT MEMBER_NAME, MEMBER_FACE, PROJECT_ACTIVITY_CONTENT, PROJECT_ACTIVITY_DATE
+		  FROM 
+			   (SELECT MEMBER_NAME, MEMBER_FACE, PROJECT_ACTIVITY_CONTENT, PROJECT_ACTIVITY_DATE
+				 FROM PROJECT_ACTIVITY
+				INNER JOIN MEMBER
+				USING (MEMBER_NO)
+				WHERE SOUP_NO = ${soupNo}
+				ORDER BY PROJECT_ACTIVITY_DATE DESC)
+		 <![CDATA[WHERE ROWNUM <= 20]]>
+	</select>
+	
+	<!-- 게시물 이동시 위치 업데이트 -->
+	<update id="updateProjectBoardOrder">
+		UPDATE PROJECT_BOARD
+		   SET PROJECT_BOARD_ORDER = #{projectBoardOrder},
+		   	   PROJECT_BOARD_GUBUN = #{projectBoardGubun}
+		 WHERE PROJECT_BOARD_NO = #{projectBoardNo}
+	</update>
+
+	<!-- 게시물 새로 생성 -->	
+	<insert id="insertProjectManageBoard" parameterType="com.hk.soup.soup.project.dto.ProjectBoardDto">
+		INSERT INTO PROJECT_BOARD
+			   (PROJECT_BOARD_NO, SOUP_NO, MEMBER_NO, PROJECT_BOARD_TITLE,
+			   PROJECT_BOARD_CONTENT, PROJECT_BOARD_DATE, PROJECT_BOARD_GUBUN,
+			   PROJECT_BOARD_ORDER, PROJECT_BOARD_SCOPE, PROJECT_BOARD_FIXED,
+			   PROJECT_BOARD_START_DATE, PROJECT_BOARD_END_DATE, PROJECT_BOARD_FILE_URL,
+			   PROJECT_BOARD_FILE_NAME, PROJECT_BOARD_CHECKLIST_NAME)
+		VALUES (PROJECT_BOARD_SEQ.NEXTVAL, #{soupNo}, #{memberNo},
+				#{projectBoardTitle}, #{projectBoardContent},
+				SYSDATE, #{projectBoardGubun}, ${projectBoardOrder},
+				'A', 'N', NULL, NULL, NULL, NULL, NULL)
+	</insert>
+	
+	<!-- 게시물의 no를 가져온다 -->
+	<select id="selectProjectBoardNo" parameterType="map" resultType="int">
+		SELECT MAX(PROJECT_BOARD_NO)
+		  FROM PROJECT_BOARD
+		 WHERE SOUP_NO = #{soupNo}
+		   AND MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!-- 게시물 삭제 -->
+	<delete id="deleteProjectManageBoard" parameterType="map">
+		DELETE
+		  FROM PROJECT_BOARD
+		 WHERE PROJECT_BOARD_NO = #{projectBoardNo}
+	</delete>
+	
+	<!-- 해당 게시물의 정보들을 가져온다 -->
+	<select id="selectProjectBoard" parameterType="map" resultMap="ProjectBoardDtoMap">
+		SELECT PROJECT_BOARD_NO, PROJECT_BOARD_ORDER, MEMBER_NO, MEMBER_NAME, PROJECT_BOARD_TITLE, PROJECT_BOARD_CONTENT,
+		       PROJECT_BOARD_SCOPE, PROJECT_BOARD_FIXED, PROJECT_BOARD_START_DATE, PROJECT_BOARD_END_DATE, 
+		       PROJECT_BOARD_FILE_NAME, PROJECT_BOARD_FILE_URL, PROJECT_BOARD_CHECKLIST_NAME
+		  FROM PROJECT_BOARD
+		 INNER JOIN MEMBER
+		 USING (MEMBER_NO)
+		 WHERE PROJECT_BOARD_NO = #{projectBoardNo}
+	</select>
+	
+	<!-- 해당 프로젝트의 게시물의 시작날짜, 끝날짜 를 가져온다 -->
+	<select id="selectProjectBoardDateList" parameterType="map" resultMap="projectBoardDateDto">
+		SELECT PROJECT_BOARD_TITLE, PROJECT_BOARD_START_DATE, PROJECT_BOARD_END_DATE
+		  FROM PROJECT_BOARD
+		 WHERE SOUP_NO = #{soupNo}
+		   AND PROJECT_BOARD_START_DATE IS NOT NULL
+		   AND PROJECT_BOARD_END_DATE IS NOT NULL
+		 ORDER BY PROJECT_BOARD_START_DATE ASC, PROJECT_BOARD_END_DATE ASC
+	</select>
+	
+	<!-- 게시물을 업데이트 한다 -->
+	<update id="updateProjectBoard" parameterType="com.hk.soup.soup.project.dto.ProjectBoardDto">
+		UPDATE PROJECT_BOARD
+		   SET PROJECT_BOARD_TITLE = #{projectBoardTitle},
+		   	   PROJECT_BOARD_CONTENT = #{projectBoardContent}
+		   	   <choose>
+		   	   		<when test="projectBoardStartDate != null">
+		   	   			,PROJECT_BOARD_START_DATE = #{projectBoardStartDate},
+			   	   		PROJECT_BOARD_END_DATE = #{projectBoardEndDate}
+		   	   		</when>
+		   	   		<otherwise>
+		   	   			,PROJECT_BOARD_START_DATE = NULL,
+		   	   			PROJECT_BOARD_END_DATE = NULL
+		   	   		</otherwise>
+		   	   </choose>
+		 WHERE PROJECT_BOARD_NO = #{projectBoardNo}
+	</update>
+	
+	<insert id="insertProjectActivity" parameterType="map">
+		INSERT 
+		  INTO PROJECT_ACTIVITY
+		VALUES (#{soupNo}, #{memberNo}, #{content}, SYSDATE)
+	</insert>
+	
+</mapper>

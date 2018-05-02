@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.studyRoom">
+
+	<resultMap type="com.hk.soup.studyRoom.dto.StudyRoomDto" id="studyRoomDto">
+		<result column="STUDYROOM_NO" property="studyRoomNo"/>
+		<result column="STUDYROOM_THUMBNAIL" property="studyRoomThumbnail"/>
+		<result column="STUDYROOM_NAME" property="studyRoomName"/>
+		<result column="STUDYROOM_PRICE" property="studyRoomPrice"/>
+		<result column="BUSINESS_NO" property="businessNo"/>
+		<result column="STUDYROOM_CONTENT" property="studyRoomContent"/>
+		<result column="STUDYROOM_ADDR1" property="studyRoomAddr1"/>
+		<result column="STUDYROOM_ADDR2" property="studyRoomAddr2"/>
+		<result column="STUDYROOM_ADDR" property="studyRoomAddr"/>
+		<result column="STUDYROOM_DATE" property="studyRoomDate"/>
+		<result column="STUDYROOM_HIT" property="studyRoomHit"/>
+	</resultMap>
+	
+	<select id = "selectList" resultMap="studyRoomDto">
+		SELECT * FROM STUDYROOM ORDER BY STUDYROOM_NO DESC
+	</select>
+	
+	<select id = "selectSearch" resultMap="studyRoomDto">
+		SELECT *
+		FROM(
+			SELECT ROWNUM AS RN, A.*
+			FROM( 
+			SELECT * 
+			FROM STUDYROOM 
+			<choose>
+				<when test = "searchOption=='all'">
+					WHERE STUDYROOM_NAME LIKE '%'||#{keyword}||'%'
+					OR       STUDYROOM_ADDR LIKE '%'||#{keyword}||'%'
+				</when>
+				<otherwise>
+					WHERE ${searchOption} like '%'||#{keyword}||'%'
+				</otherwise>
+			</choose>
+			ORDER BY STUDYROOM_NO DESC) A
+			) WHERE rn BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id = "selectAll" resultMap="studyRoomDto">
+		SELECT *
+		FROM(
+			SELECT ROWNUM AS RN, A.*
+			FROM( 
+			SELECT * 
+			FROM STUDYROOM 
+			ORDER BY STUDYROOM_NO DESC) A
+			) WHERE rn BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="countArticle" resultType="int">
+		SELECT COUNT(*) FROM STUDYROOM
+		<choose>
+				<when test = "searchOption=='all'">
+					WHERE STUDYROOM_NAME LIKE '%'||#{keyword}||'%'
+					OR       STUDYROOM_ADDR LIKE '%'||#{keyword}||'%'
+				</when>
+				<otherwise>
+					WHERE ${searchOption} like '%'||#{keyword}||'%'
+				</otherwise>
+			</choose>
+	</select>
+	
+	<select id="selectOne" resultMap="studyRoomDto">
+		SELECT * FROM STUDYROOM WHERE STUDYROOM_NO=#{studyRoomNo}
+	</select>
+  	<insert id="insert" >
+  		INSERT INTO STUDYROOM VALUES(STUDYROOM_SEQ.NEXTVAL,#{studyRoomThumbnail},#{studyRoomName},
+  		#{studyRoomPrice},2,#{studyRoomContent},#{studyRoomAddr1},#{studyRoomAddr2},#{studyRoomAddr},
+  		SYSDATE,0)
+  	</insert>
+  	<update id="updateHit">
+  		UPDATE STUDYROOM SET STUDYROOM_HIT = STUDYROOM_HIT+1 WHERE STUDYROOM_NO=#{studyRoomNo}
+  	</update>
+  	<delete id="delete">
+  		DELETE FROM STUDYROOM WHERE STUDYROOM_NO = #{studyRoomNo}
+  	</delete>
+</mapper>

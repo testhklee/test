@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.teacher">
+	<resultMap type="com.hk.soup.teacher.dto.TeacherDto" id="teacherDto">
+		<result column="TEACHER_NO" property="teacherNo"/>
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="TEACHER_DD" property="teacherDd"/>
+		<result column="TEACHER_CERTIFICATE" property="teacherCertificate"/>
+		<result column="TEACHER_PRVIDEO" property="teacherPrvideo"/>
+		<result column="TEACHER_STATUS" property="teacherStatus"/>
+		<result column="MEMBER_NAME" property="memberName"/>
+ 		<result column="MEMBER_TEL" property="memberTel"/>
+ 		<result column="MEMBER_EMAIL" property="memberEmail"/>
+ 		<result column="MEMBER_GRADE" property="memberGrade"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="teacherDto">
+ 		SELECT * FROM TEACHER JOIN MEMBER USING(MEMBER_NO) ORDER BY TEACHER_APPLY_DATE DESC
+ 	</select>
+ 	
+ 	<select id = "selectOne" resultMap="teacherDto">
+ 		SELECT * FROM TEACHER JOIN MEMBER USING(MEMBER_NO) WHERE MEMBER_NO = #{memberNo}
+ 	</select>
+ 	
+ 	<update id="updateMemberGrade" parameterType="map">
+		UPDATE MEMBER
+		   SET MEMBER_GRADE = #{memberGrade}
+		 WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<update id="updateTeacherStatus" parameterType="map">
+		UPDATE TEACHER
+		   SET TEACHER_STATUS = #{teacherStatus}
+		 WHERE MEMBER_NO = #{memberNo} 
+	</update>
+	
+</mapper>
